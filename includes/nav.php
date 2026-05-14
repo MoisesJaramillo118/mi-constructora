@@ -1,0 +1,49 @@
+<?php
+$site = $site ?? site_data();
+$nav = [
+  ['/',           'Inicio'],
+  ['/proyectos',  'Proyectos'],
+  ['/contacto',   'Contacto'],
+];
+?>
+<header id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+  <div class="container-x flex items-center justify-between py-5">
+
+    <a href="/" class="flex items-center gap-2 group">
+      <span class="inline-flex w-9 h-9 rounded-full bg-brand-600 items-center justify-center text-white font-display font-bold text-lg shadow-lg shadow-brand-600/40 group-hover:scale-110 transition">
+        <?= e(strtoupper(substr($site['name'] ?? 'C', 0, 1))) ?>
+      </span>
+      <span class="text-white font-display font-bold text-xl tracking-tight">
+        <?= e($site['name'] ?? 'Constructora') ?>
+      </span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-9">
+      <?php foreach ($nav as [$href, $label]): ?>
+        <a href="<?= e($href) ?>"
+           class="text-sm font-medium tracking-wide text-white/85 hover:text-white transition relative
+                  <?= is_current($href) ? 'after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:bg-brand-500' : '' ?>">
+          <?= e($label) ?>
+        </a>
+      <?php endforeach; ?>
+    </nav>
+
+    <a href="/contacto" class="hidden md:inline-flex btn-primary text-xs">
+      Cotiza tu obra
+    </a>
+
+    <button id="navToggle" class="md:hidden text-white p-2" aria-label="Abrir menú">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+
+  <!-- Menú móvil -->
+  <div id="navMobile" class="md:hidden hidden bg-ink-900/95 backdrop-blur border-t border-white/10">
+    <nav class="container-x py-5 flex flex-col gap-4">
+      <?php foreach ($nav as [$href, $label]): ?>
+        <a href="<?= e($href) ?>" class="text-white/90 text-lg"><?= e($label) ?></a>
+      <?php endforeach; ?>
+      <a href="/contacto" class="btn-primary text-xs self-start mt-2">Cotiza tu obra</a>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "diseno-arquitectonico",
+    "title": "Diseño arquitectónico",
+    "icon": "draft",
+    "description": "Convertimos tus ideas en planos detallados. Anteproyectos, planos definitivos y visualización 3D para que veas tu obra antes de construirla.",
+    "order": 1
+  },
+  {
+    "id": "construccion-obra",
+    "title": "Construcción de obra",
+    "icon": "hammer",
+    "description": "Ejecutamos viviendas, edificios y proyectos comerciales con materiales certificados, cronograma claro y supervisión profesional permanente.",
+    "order": 2
+  },
+  {
+    "id": "remodelaciones",
+    "title": "Remodelaciones",
+    "icon": "wrench",
+    "description": "Renovamos espacios sin perder su esencia: cocinas, baños, oficinas y ampliaciones con acabados de primera calidad.",
+    "order": 3
+  },
+  {
+    "id": "ingenieria-estructural",
+    "title": "Ingeniería estructural",
+    "icon": "beam",
+    "description": "Cálculos sismorresistentes, peritajes y diseño estructural por ingenieros colegiados, garantizando seguridad y durabilidad.",
+    "order": 4
+  },
+  {
+    "id": "supervision-obra",
+    "title": "Supervisión de obra",
+    "icon": "shield",
+    "description": "Si ya tienes constructor, podemos supervisar la obra a tu favor: control de calidad, valorizaciones y plazos.",
+    "order": 5
+  },
+  {
+    "id": "consultoria",
+    "title": "Consultoría y trámites",
+    "icon": "doc",
+    "description": "Licencias municipales, conformidad de obra, regularizaciones y asesoría técnica integral para tu proyecto.",
+    "order": 6
+  }
+]

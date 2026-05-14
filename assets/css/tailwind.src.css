@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Base global ---------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-white text-ink-900 font-sans;
+  }
+  h1, h2, h3 {
+    @apply font-display tracking-tight;
+  }
+  ::selection {
+    @apply bg-brand-500 text-white;
+  }
+}
+
+/* ---------- Componentes reutilizables ---------- */
+@layer components {
+  .container-x {
+    @apply max-w-7xl mx-auto px-6 lg:px-10;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5
+           font-semibold tracking-wide uppercase text-sm
+           rounded-full transition-all duration-300;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 text-white hover:bg-brand-700
+           shadow-lg shadow-brand-600/30 hover:-translate-y-0.5;
+  }
+  .btn-ghost {
+    @apply btn border border-white/40 text-white hover:bg-white hover:text-ink-900;
+  }
+  .btn-dark {
+    @apply btn bg-ink-900 text-white hover:bg-ink-800;
+  }
+
+  /* Botón con efecto shimmer (CTA destacado) */
+  .btn-shine {
+    position: relative;
+    overflow: hidden;
+    background-image: linear-gradient(110deg, #d03801 0%, #ff5a1f 45%, #ffb088 50%, #ff5a1f 55%, #d03801 100%);
+    background-size: 200% auto;
+    animation: shimmer 3s linear infinite;
+  }
+
+  /* Tarjetas */
+  .card {
+    @apply bg-white rounded-2xl shadow-sm hover:shadow-2xl
+           transition-all duration-500 overflow-hidden;
+  }
+
+  /* Etiquetas (eyebrow) */
+  .eyebrow {
+    @apply inline-block uppercase tracking-[0.25em] text-xs font-semibold
+           text-brand-600 mb-4;
+  }
+
+  /* Heading section */
+  .h-section {
+    @apply text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight;
+  }
+}
+
+/* ---------- Utilidades extra ---------- */
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .mask-fade-r {
+    -webkit-mask-image: linear-gradient(to right, black 80%, transparent);
+            mask-image: linear-gradient(to right, black 80%, transparent);
+  }
+}
+
+/* Cursor custom (solo desktop con puntero fino) */
+@media (hover: hover) and (pointer: fine) {
+  body.has-cursor { cursor: none; }
+  body.has-cursor a, body.has-cursor button { cursor: none; }
+  .cursor-dot {
+    position: fixed; top: 0; left: 0; width: 8px; height: 8px;
+    background: #d03801; border-radius: 9999px;
+    transform: translate(-50%, -50%);
+    pointer-events: none; z-index: 9999;
+    transition: width .2s, height .2s, background .2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed; top: 0; left: 0; width: 36px; height: 36px;
+    border: 1.5px solid #d03801; border-radius: 9999px;
+    transform: translate(-50%, -50%);
+    pointer-events: none; z-index: 9998;
+    transition: transform .15s ease-out, width .25s, height .25s, border-color .25s;
+  }
+  .cursor-ring.is-hover { width: 60px; height: 60px; border-color: #ff5a1f; }
+}
+
+/* Swiper paginación custom */
+.swiper-pagination-bullet {
+  background: #ffffff !important; opacity: .5 !important;
+  width: 10px !important; height: 10px !important;
+}
+.swiper-pagination-bullet-active {
+  background: #ff5a1f !important; opacity: 1 !important;
+  width: 30px !important; border-radius: 9999px !important;
+}
+.swiper-button-prev, .swiper-button-next {
+  color: #ffffff !important;
+}
+.swiper-button-prev::after, .swiper-button-next::after {
+  font-size: 22px !important; font-weight: 900 !important;
+}
+
+/* Loader inicial (oculto luego de cargar) */
+.page-loader {
+  position: fixed; inset: 0; background: #0b1220; z-index: 99999;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity .6s ease;
+}
+.page-loader.is-hidden { opacity: 0; pointer-events: none; }
+.page-loader .bar {
+  width: 4px; height: 32px; background: #ff5a1f; margin: 0 3px;
+  animation: float 1s ease-in-out infinite;
+}
+.page-loader .bar:nth-child(2) { animation-delay: .15s; }
+.page-loader .bar:nth-child(3) { animation-delay: .3s; }
+.page-loader .bar:nth-child(4) { animation-delay: .45s; }

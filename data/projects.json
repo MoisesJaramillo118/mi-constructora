@@ -1,0 +1,82 @@
+[
+  {
+    "id": "edificio-las-orquideas",
+    "title": "Edificio Las Orquídeas",
+    "year": 2025,
+    "location": "Miraflores, Lima",
+    "image": "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1600&q=80",
+    "description": "Edificio multifamiliar de 8 pisos con áreas comunes premium. 24 departamentos entregados llave en mano.",
+    "featured": true,
+    "order": 1
+  },
+  {
+    "id": "casa-de-playa-asia",
+    "title": "Casa de playa en Asia",
+    "year": 2024,
+    "location": "Asia, Cañete",
+    "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
+    "description": "Casa moderna de 420 m² con piscina infinita, integración con el paisaje y sistema fotovoltaico.",
+    "featured": true,
+    "order": 2
+  },
+  {
+    "id": "oficinas-corporativas-san-isidro",
+    "title": "Oficinas corporativas en San Isidro",
+    "year": 2024,
+    "location": "San Isidro, Lima",
+    "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80",
+    "description": "Remodelación integral de 1,200 m² de oficinas: diseño biofílico, salas de reunión inteligentes y cocina gourmet.",
+    "featured": true,
+    "order": 3
+  },
+  {
+    "id": "vivienda-unifamiliar-la-molina",
+    "title": "Vivienda unifamiliar La Molina",
+    "year": 2023,
+    "location": "La Molina, Lima",
+    "image": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80",
+    "description": "Casa de 3 niveles de 360 m² con doble altura, jardín interior y acabados de primera.",
+    "featured": true,
+    "order": 4
+  },
+  {
+    "id": "local-comercial-arequipa",
+    "title": "Local comercial Arequipa",
+    "year": 2023,
+    "location": "Arequipa",
+    "image": "https://images.unsplash.com/photo-1565538810643-b5bdb714032a?auto=format&fit=crop&w=1600&q=80",
+    "description": "Diseño y construcción de local comercial de 600 m² con fachada de gran formato y estacionamiento subterráneo.",
+    "featured": false,
+    "order": 5
+  },
+  {
+    "id": "remodelacion-cocina-barranco",
+    "title": "Remodelación de cocina en Barranco",
+    "year": 2024,
+    "location": "Barranco, Lima",
+    "image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1600&q=80",
+    "description": "Cocina abierta con isla de granito, muebles a medida e iluminación arquitectónica.",
+    "featured": false,
+    "order": 6
+  },
+  {
+    "id": "ampliacion-vivienda-surco",
+    "title": "Ampliación vivienda Surco",
+    "year": 2022,
+    "location": "Santiago de Surco, Lima",
+    "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=80",
+    "description": "Construcción de tercer nivel sobre vivienda existente, reforzando estructura sismorresistente.",
+    "featured": false,
+    "order": 7
+  },
+  {
+    "id": "loft-industrial-jesus-maria",
+    "title": "Loft industrial Jesús María",
+    "year": 2025,
+    "location": "Jesús María, Lima",
+    "image": "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1600&q=80",
+    "description": "Conversión de almacén a loft residencial estilo industrial con techos altos y carpintería metálica.",
+    "featured": false,
+    "order": 8
+  }
+]

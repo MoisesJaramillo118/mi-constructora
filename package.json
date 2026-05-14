@@ -1,0 +1,15 @@
+{
+  "name": "mi-constructora",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sitio web premium para empresa constructora (PHP + Tailwind + GSAP)",
+  "scripts": {
+    "build:css": "tailwindcss -i ./assets/css/tailwind.src.css -o ./assets/css/style.css --minify",
+    "watch:css": "tailwindcss -i ./assets/css/tailwind.src.css -o ./assets/css/style.css --watch",
+    "serve": "php -S localhost:8000",
+    "dev": "echo 'Abre 2 terminales: npm run watch:css en una, npm run serve en otra.'"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.13"
+  }
+}
