@@ -1,12 +1,10 @@
 /**
- * Constructora — animaciones premium
- *  - GSAP + ScrollTrigger: hero stagger, parallax, contadores, nav shrink
- *  - Swiper: carrusel proyectos destacados
- *  - AOS: fade-in genéricos
- *  - Cursor custom (solo desktop con pointer fino)
- *  - Menú móvil
+ * Santa Cruz — animaciones (sin cursor custom)
+ *   GSAP + ScrollTrigger: hero stagger, parallax, contadores, nav shrink
+ *   Swiper: carrusel proyectos destacados
+ *   AOS: fade-in genéricos
+ *   Menú móvil
  */
-
 (function () {
   'use strict';
 
@@ -33,7 +31,7 @@
   if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero: palabras aparecen escalonadas
+    // Hero: palabras escalonadas
     gsap.set('.hero-title .word > span', { y: '110%' });
     gsap.to('.hero-title .word > span', {
       y: '0%',
@@ -49,17 +47,19 @@
       y: 30, opacity: 0, duration: 0.9, delay: 1.1, stagger: 0.1, ease: 'power3.out',
     });
 
-    // Parallax del fondo del hero
-    gsap.to('.hero-bg img', {
-      yPercent: 20,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
+    // Parallax del hero
+    if (document.querySelector('.hero-bg img')) {
+      gsap.to('.hero-bg img', {
+        yPercent: 20,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    }
 
     // Contadores animados
     document.querySelectorAll('.stat').forEach((el) => {
@@ -83,7 +83,7 @@
       });
     });
 
-    // Nav shrink al hacer scroll
+    // Nav: cambia look al hacer scroll
     const nav = document.getElementById('nav');
     if (nav) {
       ScrollTrigger.create({
@@ -105,7 +105,7 @@
     gsap.from('main', { opacity: 0, duration: 0.6, ease: 'power2.out' });
   }
 
-  // ─── Swiper carrusel de proyectos destacados ──────────────────────
+  // ─── Swiper proyectos destacados ──────────────────────────────────
   if (window.Swiper && document.querySelector('.projectsSwiper')) {
     new Swiper('.projectsSwiper', {
       slidesPerView: 1,
@@ -113,7 +113,6 @@
       loop: true,
       speed: 900,
       autoplay: { delay: 4500, disableOnInteraction: false },
-      effect: 'slide',
       grabCursor: true,
       pagination: { el: '.projectsSwiper .swiper-pagination', clickable: true },
       navigation: {
@@ -137,38 +136,16 @@
     );
   }
 
-  // ─── Cursor custom (solo desktop con pointer fino) ────────────────
-  const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  const dot  = document.getElementById('cursorDot');
-  const ring = document.getElementById('cursorRing');
-
-  if (isFinePointer && dot && ring) {
-    const mouse = { x: 0, y: 0 };
-    const ringPos = { x: 0, y: 0 };
-
-    document.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-      dot.style.transform = `translate(${mouse.x}px, ${mouse.y}px) translate(-50%, -50%)`;
+  // ─── Botones magnetic (hover sutil que sigue al cursor) ───────────
+  document.querySelectorAll('.btn-primary, .btn-shine').forEach((btn) => {
+    const reset = () => { btn.style.transform = ''; };
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top  - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.15}px, ${y * 0.2}px)`;
     });
-
-    function animateRing() {
-      ringPos.x += (mouse.x - ringPos.x) * 0.18;
-      ringPos.y += (mouse.y - ringPos.y) * 0.18;
-      ring.style.transform = `translate(${ringPos.x}px, ${ringPos.y}px) translate(-50%, -50%)`;
-      requestAnimationFrame(animateRing);
-    }
-    animateRing();
-
-    const interactive = 'a, button, [role="button"], input, textarea, select, label';
-    document.querySelectorAll(interactive).forEach((el) => {
-      el.addEventListener('mouseenter', () => ring.classList.add('is-hover'));
-      el.addEventListener('mouseleave', () => ring.classList.remove('is-hover'));
-    });
-  } else {
-    document.body.classList.remove('has-cursor');
-    if (dot)  dot.remove();
-    if (ring) ring.remove();
-  }
+    btn.addEventListener('mouseleave', reset);
+  });
 
 })();

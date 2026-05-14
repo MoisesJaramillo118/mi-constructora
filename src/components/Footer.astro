@@ -1,0 +1,54 @@
+---
+import site from '../data/site.json';
+import { waLink } from '../lib/utils';
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-ink-900 text-white pt-20 pb-10 mt-24">
+  <div class="container-x grid grid-cols-1 md:grid-cols-4 gap-12">
+
+    <div class="md:col-span-2">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="inline-flex w-10 h-10 rounded-full bg-brand-600 items-center justify-center
+                     text-white font-display font-bold text-sm">
+          {site.short_name ?? 'SC'}
+        </span>
+        <span class="font-display font-bold text-2xl">{site.name}</span>
+      </div>
+      <p class="text-white/70 max-w-md leading-relaxed">{site.tagline}</p>
+    </div>
+
+    <div>
+      <h4 class="uppercase tracking-[0.25em] text-xs text-brand-400 font-semibold mb-5">Contacto</h4>
+      <ul class="space-y-3 text-white/80 text-sm">
+        {site.phone && (
+          <li><a href={`tel:${site.phone}`} class="hover:text-white">📞 {site.phone}</a></li>
+        )}
+        {site.email && (
+          <li><a href={`mailto:${site.email}`} class="hover:text-white">✉️ {site.email}</a></li>
+        )}
+        {site.address && <li>📍 {site.address}</li>}
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="uppercase tracking-[0.25em] text-xs text-brand-400 font-semibold mb-5">Redes</h4>
+      <ul class="space-y-3 text-white/80 text-sm">
+        {site.instagram && (
+          <li><a href={site.instagram} target="_blank" rel="noopener" class="hover:text-white">Instagram</a></li>
+        )}
+        {site.facebook && (
+          <li><a href={site.facebook} target="_blank" rel="noopener" class="hover:text-white">Facebook</a></li>
+        )}
+        {site.whatsapp && (
+          <li><a href={waLink(site.whatsapp, 'Hola Santa Cruz, vengo desde la web.')} target="_blank" rel="noopener" class="hover:text-white">WhatsApp</a></li>
+        )}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-x mt-14 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-white/50">
+    <span>© {year} {site.name}. Todos los derechos reservados.</span>
+    <span>Hecho con cuidado.</span>
+  </div>
+</footer>

@@ -1,15 +1,18 @@
 {
-  "name": "mi-constructora",
+  "name": "santa-cruz",
   "version": "1.0.0",
   "private": true,
-  "description": "Sitio web premium para empresa constructora (PHP + Tailwind + GSAP)",
+  "description": "Sitio web Santa Cruz — Astro + Tailwind + GSAP",
+  "type": "module",
   "scripts": {
-    "build:css": "tailwindcss -i ./assets/css/tailwind.src.css -o ./assets/css/style.css --minify",
-    "watch:css": "tailwindcss -i ./assets/css/tailwind.src.css -o ./assets/css/style.css --watch",
-    "serve": "php -S localhost:8000",
-    "dev": "echo 'Abre 2 terminales: npm run watch:css en una, npm run serve en otra.'"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
   },
-  "devDependencies": {
+  "dependencies": {
+    "@astrojs/tailwind": "^5.1.2",
+    "astro": "^4.16.18",
     "tailwindcss": "^3.4.13"
   }
 }

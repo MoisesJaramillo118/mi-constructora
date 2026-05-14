@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ---------- Base global ---------- */
+/* ---------- Base ---------- */
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -17,6 +17,7 @@
   ::selection {
     @apply bg-brand-500 text-white;
   }
+  img { @apply max-w-full; }
 }
 
 /* ---------- Componentes reutilizables ---------- */
@@ -41,7 +42,7 @@
     @apply btn bg-ink-900 text-white hover:bg-ink-800;
   }
 
-  /* Botón con efecto shimmer (CTA destacado) */
+  /* CTA con efecto shimmer */
   .btn-shine {
     position: relative;
     overflow: hidden;
@@ -50,56 +51,27 @@
     animation: shimmer 3s linear infinite;
   }
 
-  /* Tarjetas */
   .card {
     @apply bg-white rounded-2xl shadow-sm hover:shadow-2xl
            transition-all duration-500 overflow-hidden;
   }
 
-  /* Etiquetas (eyebrow) */
   .eyebrow {
     @apply inline-block uppercase tracking-[0.25em] text-xs font-semibold
            text-brand-600 mb-4;
   }
 
-  /* Heading section */
   .h-section {
-    @apply text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight;
+    @apply text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.1];
   }
 }
 
 /* ---------- Utilidades extra ---------- */
 @layer utilities {
   .text-balance { text-wrap: balance; }
-  .mask-fade-r {
-    -webkit-mask-image: linear-gradient(to right, black 80%, transparent);
-            mask-image: linear-gradient(to right, black 80%, transparent);
-  }
 }
 
-/* Cursor custom (solo desktop con puntero fino) */
-@media (hover: hover) and (pointer: fine) {
-  body.has-cursor { cursor: none; }
-  body.has-cursor a, body.has-cursor button { cursor: none; }
-  .cursor-dot {
-    position: fixed; top: 0; left: 0; width: 8px; height: 8px;
-    background: #d03801; border-radius: 9999px;
-    transform: translate(-50%, -50%);
-    pointer-events: none; z-index: 9999;
-    transition: width .2s, height .2s, background .2s;
-    mix-blend-mode: difference;
-  }
-  .cursor-ring {
-    position: fixed; top: 0; left: 0; width: 36px; height: 36px;
-    border: 1.5px solid #d03801; border-radius: 9999px;
-    transform: translate(-50%, -50%);
-    pointer-events: none; z-index: 9998;
-    transition: transform .15s ease-out, width .25s, height .25s, border-color .25s;
-  }
-  .cursor-ring.is-hover { width: 60px; height: 60px; border-color: #ff5a1f; }
-}
-
-/* Swiper paginación custom */
+/* ---------- Swiper paginación custom ---------- */
 .swiper-pagination-bullet {
   background: #ffffff !important; opacity: .5 !important;
   width: 10px !important; height: 10px !important;
@@ -115,7 +87,7 @@
   font-size: 22px !important; font-weight: 900 !important;
 }
 
-/* Loader inicial (oculto luego de cargar) */
+/* ---------- Loader inicial ---------- */
 .page-loader {
   position: fixed; inset: 0; background: #0b1220; z-index: 99999;
   display: flex; align-items: center; justify-content: center;
@@ -129,3 +101,30 @@
 .page-loader .bar:nth-child(2) { animation-delay: .15s; }
 .page-loader .bar:nth-child(3) { animation-delay: .3s; }
 .page-loader .bar:nth-child(4) { animation-delay: .45s; }
+
+/* ---------- Reveal por palabras (hero) ---------- */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+.word > span {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ---------- Magnetic / hover micro-detalles modernos ---------- */
+.hover-lift {
+  transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+}
+
+/* AOS suaviza un poco al entrar */
+[data-aos] {
+  pointer-events: none;
+}
+[data-aos].aos-animate {
+  pointer-events: auto;
+}

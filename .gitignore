@@ -1,8 +1,21 @@
-# Node / Tailwind
+# Dependencias
 node_modules/
-npm-debug.log
-yarn-error.log
-package-lock.json
+.pnpm-store/
+
+# Build
+dist/
+.astro/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Env / locales
+.env
+.env.local
+.env.*.local
 
 # Editores / SO
 .DS_Store
@@ -10,19 +23,5 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Sensibles
-data/users.json
-data/_inbox/
-data/_rate_limit*
-
-# Imágenes subidas por el cliente: las guardamos en producción,
-# no se versionan (se respaldan por FTP).
-uploads/*
-!uploads/.gitkeep
-!uploads/projects/.gitkeep
-!uploads/services/.gitkeep
-!uploads/hero/.gitkeep
-
-# Salida de PHP / logs
-error_log
-*.log
+# Netlify CLI local
+.netlify/

@@ -1,13 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./**/*.php",
-    "./assets/js/**/*.js",
-  ],
+export default {
+  content: ['./src/**/*.{astro,html,js,ts,md,mdx}'],
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans:    ['Inter', 'system-ui', 'sans-serif'],
         display: ['"Playfair Display"', 'Georgia', 'serif'],
       },
       colors: {
@@ -46,4 +43,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};

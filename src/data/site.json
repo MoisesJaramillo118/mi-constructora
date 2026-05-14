@@ -1,6 +1,7 @@
 {
-  "name": "Constructora Andina",
-  "tagline": "Diseñamos y construimos obras que perduran",
+  "name": "Santa Cruz",
+  "short_name": "SC",
+  "tagline": "Construimos obras que perduran",
   "hero_title": "Construimos lo que imaginas",
   "hero_subtitle": "Más de 15 años entregando obras de calidad en todo el Perú: viviendas, edificios y proyectos comerciales con visión y precisión.",
   "hero_image": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1920&q=80",
@@ -9,17 +10,13 @@
   "about_image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=80",
   "phone": "+51 999 888 777",
   "whatsapp": "+51999888777",
-  "whatsapp_message": "Hola, vengo desde la web y quisiera información sobre sus servicios.",
-  "email": "contacto@constructora-andina.com",
+  "whatsapp_message": "Hola Santa Cruz, vengo desde la web y quisiera información.",
+  "email": "contacto@santacruz.pe",
   "address": "Av. La Marina 1500, San Miguel, Lima, Perú",
   "instagram": "https://instagram.com/",
-  "facebook":  "https://facebook.com/",
+  "facebook": "https://facebook.com/",
   "cta_title": "¿Tienes un terreno y una idea?",
   "cta_subtitle": "Convirtamos esa visión en una obra real. Solicita una cotización sin compromiso.",
-  "smtp_host": "smtp.gmail.com",
-  "smtp_port": 587,
-  "smtp_user": "",
-  "smtp_pass": "",
-  "smtp_from_name": "Web Constructora Andina",
-  "smtp_to": "contacto@constructora-andina.com"
+  "cta_image": "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=1920&q=80",
+  "year_founded": 2010
 }

@@ -1,0 +1,41 @@
+---
+type Project = {
+  id: string;
+  title: string;
+  year: number;
+  location: string;
+  image: string;
+  description: string;
+};
+type Props = { projects: Project[] };
+const { projects } = Astro.props;
+---
+
+<div class="swiper projectsSwiper" data-aos="fade-up">
+  <div class="swiper-wrapper">
+    {projects.map(p => (
+      <div class="swiper-slide px-4">
+        <div class="relative group rounded-3xl overflow-hidden aspect-[16/10] shadow-2xl">
+          <img src={p.image} alt={p.title} loading="lazy"
+               class="w-full h-full object-cover transition duration-[1500ms] group-hover:scale-110" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/40 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+            <div class="text-xs uppercase tracking-[0.3em] text-brand-400 mb-2">
+              {p.year} · {p.location}
+            </div>
+            <h3 class="font-display font-bold text-3xl md:text-4xl">{p.title}</h3>
+            <p class="mt-3 max-w-xl text-white/80 text-sm md:text-base leading-relaxed">
+              {p.description}
+            </p>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="swiper-pagination !relative !bottom-0 mt-10"></div>
+  <div class="hidden md:block">
+    <div class="swiper-button-prev !left-2"></div>
+    <div class="swiper-button-next !right-2"></div>
+  </div>
+</div>
