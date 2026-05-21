@@ -95,10 +95,11 @@ plan gratuito hasta 500 MB de imágenes).
 ### Setup inicial (una sola vez)
 
 1. **Crea un proyecto en Supabase** → https://supabase.com → New Project (plan Free).
-2. **Ejecuta el SQL** en `Dashboard → SQL Editor → New query`:
-   - Copia y pega todo el contenido de [`supabase_setup.sql`](./supabase_setup.sql)
-   - Pulsa **Run** — crea la tabla `projects`, el bucket `project-images`, las políticas
-     y siembra los proyectos iniciales.
+2. **Ejecuta los SQL** en `Dashboard → SQL Editor → New query` (uno a la vez):
+   - [`supabase_setup.sql`](./supabase_setup.sql) — tabla `projects`, bucket `project-images`,
+     políticas y proyectos iniciales.
+   - [`supabase_migration_2_site_settings.sql`](./supabase_migration_2_site_settings.sql) —
+     tabla `site_settings` para guardar la imagen del "Quiénes somos" del Home.
 3. **Copia las credenciales** de `Dashboard → Settings → API`:
    - `Project URL`
    - `anon` public key
@@ -116,9 +117,10 @@ plan gratuito hasta 500 MB de imágenes).
 - Visita `https://tu-sitio.netlify.app/admin`
 - Ingresa la contraseña configurada en `PUBLIC_ADMIN_PASSWORD`
 - Desde ahí puedes:
-  - **+ Nuevo proyecto** — formulario con upload de imagen
-  - **Editar** — modificar título, ubicación, descripción, año, orden, destacado
-  - **Eliminar** — borra el proyecto y la imagen del storage
+  - **Imagen "Quiénes somos"** — sube una nueva foto para el bloque del Home.
+  - **+ Nuevo proyecto** — formulario con upload de imagen.
+  - **Editar** — modificar título, ubicación, descripción, año, orden, destacado.
+  - **Eliminar** — borra el proyecto y la imagen del storage.
 
 Los cambios se reflejan inmediatamente en `/proyectos` (no requiere rebuild del sitio).
 

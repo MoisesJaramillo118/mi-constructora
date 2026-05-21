@@ -55,7 +55,52 @@ import site from '../data/site.json';
           </div>
         </div>
 
+        <!-- ─── Sección "Sobre la empresa" ─── -->
+        <section class="bg-ink-800 rounded-xl border border-white/5 p-6 mb-10">
+          <div class="flex flex-col md:flex-row md:items-start gap-6">
+            <div class="md:w-64 shrink-0">
+              <div class="text-sm font-semibold text-white/90 mb-2">
+                Imagen "Quiénes somos"
+              </div>
+              <div class="aspect-[4/5] rounded-lg overflow-hidden bg-ink-900 border border-white/10">
+                <img id="about-preview" src="" alt="Imagen del bloque Quiénes somos"
+                     class="w-full h-full object-cover" />
+              </div>
+            </div>
+
+            <div class="flex-1">
+              <h3 class="text-lg font-semibold mb-1">Cambiar imagen del Home</h3>
+              <p class="text-sm text-white/60 mb-4">
+                Esta imagen aparece al lado del bloque "Quiénes somos" en la página principal.
+                Sube una foto nueva y se actualizará al instante.
+              </p>
+
+              <input
+                id="about-image-file"
+                type="file"
+                accept="image/*"
+                class="block w-full text-sm text-white/80 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-brand-400 file:text-ink-900 hover:file:bg-brand-500 mb-3"
+              />
+              <p class="text-xs text-white/40 mb-4">
+                JPG/PNG/WebP. Recomendado: 1200×1500 px (formato vertical 4:5).
+              </p>
+
+              <div class="flex gap-3 items-center">
+                <button
+                  id="about-save"
+                  disabled
+                  class="px-5 py-2.5 bg-brand-400 hover:bg-brand-500 disabled:opacity-40 disabled:cursor-not-allowed text-ink-900 font-semibold rounded-lg transition"
+                >
+                  Guardar nueva imagen
+                </button>
+                <span id="about-status" class="text-sm text-white/60"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- Lista de proyectos -->
+        <h2 class="text-xl font-semibold mb-4">Proyectos</h2>
         <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- Se rellena por JS -->
         </div>
@@ -200,6 +245,7 @@ import site from '../data/site.json';
   import {
     getProjects, createProject, updateProject, deleteProject,
     uploadImage, deleteImageByUrl, slugify,
+    getSiteSettings, updateSiteSettings,
     type Project,
   } from '../lib/supabase';
 
@@ -220,6 +266,7 @@ import site from '../data/site.json';
     loginGate.classList.add('hidden');
     adminPanel.classList.remove('hidden');
     loadProjects();
+    loadAboutImage();
   }
   function showLogin() {
     loginGate.classList.remove('hidden');
@@ -450,5 +497,65 @@ import site from '../data/site.json';
   // Cerrar modal al clickear fuera
   modal.addEventListener('click', (e) => {
     if (e.target === modal) closeModal();
+  });
+
+  // ──────────────────────────────────────────────────────────
+  // Sección "Sobre la empresa" — imagen del Home
+  // ──────────────────────────────────────────────────────────
+  const aboutPreview = document.getElementById('about-preview') as HTMLImageElement;
+  const aboutFile = document.getElementById('about-image-file') as HTMLInputElement;
+  const aboutSave = document.getElementById('about-save') as HTMLButtonElement;
+  const aboutStatus = document.getElementById('about-status')!;
+  let currentAboutImage: string | null = null;
+  let newAboutFile: File | null = null;
+
+  async function loadAboutImage() {
+    aboutStatus.textContent = '';
+    const settings = await getSiteSettings();
+    if (settings?.about_image) {
+      currentAboutImage = settings.about_image;
+      aboutPreview.src = settings.about_image;
+    } else {
+      // Fallback al JSON original si la fila no existe aún en Supabase
+      aboutPreview.src =
+        'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=80';
+    }
+  }
+
+  aboutFile.addEventListener('change', () => {
+    newAboutFile = aboutFile.files?.[0] ?? null;
+    if (newAboutFile) {
+      aboutPreview.src = URL.createObjectURL(newAboutFile);
+      aboutSave.disabled = false;
+      aboutStatus.textContent = 'Imagen lista para subir';
+      aboutStatus.className = 'text-sm text-brand-400';
+    }
+  });
+
+  aboutSave.addEventListener('click', async () => {
+    if (!newAboutFile) return;
+    aboutSave.disabled = true;
+    aboutStatus.textContent = 'Subiendo…';
+    aboutStatus.className = 'text-sm text-white/60';
+    try {
+      const url = await uploadImage(newAboutFile);
+      if (!url) throw new Error('No se pudo subir la imagen.');
+
+      const { error } = await updateSiteSettings({ about_image: url });
+      if (error) throw new Error(error.message);
+
+      // Si había una imagen previa en nuestro bucket, intentar borrarla
+      if (currentAboutImage) await deleteImageByUrl(currentAboutImage);
+
+      currentAboutImage = url;
+      newAboutFile = null;
+      aboutFile.value = '';
+      aboutStatus.textContent = '✓ Imagen actualizada en el sitio';
+      aboutStatus.className = 'text-sm text-emerald-400';
+    } catch (err: any) {
+      aboutStatus.textContent = 'Error: ' + (err.message ?? 'no se pudo guardar');
+      aboutStatus.className = 'text-sm text-red-400';
+      aboutSave.disabled = false;
+    }
   });
 </script>

@@ -85,6 +85,35 @@ export async function deleteImageByUrl(url: string): Promise<boolean> {
   return true;
 }
 
+// ─── Helpers de Site Settings (singleton id=1) ────────────────
+export type SiteSettings = {
+  id: number;
+  about_image: string | null;
+  updated_at?: string;
+};
+
+export async function getSiteSettings(): Promise<SiteSettings | null> {
+  const { data, error } = await supabase
+    .from('site_settings')
+    .select('*')
+    .eq('id', 1)
+    .maybeSingle();
+  if (error) {
+    console.warn('Error cargando site_settings:', error);
+    return null;
+  }
+  return data as SiteSettings | null;
+}
+
+export async function updateSiteSettings(patch: Partial<SiteSettings>) {
+  return supabase
+    .from('site_settings')
+    .upsert({ id: 1, ...patch })
+    .eq('id', 1)
+    .select()
+    .single();
+}
+
 // Genera un slug a partir del título (para el id de proyecto)
 export function slugify(text: string): string {
   return text
