@@ -14,7 +14,7 @@ const isCurrent = (href: string) =>
   href === '/' ? currentPath === '/' : currentPath.startsWith(href);
 ---
 
-<header id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+<header id="nav" class="nav-default fixed top-0 inset-x-0 z-50 transition-all duration-300">
   <div class="container-x flex items-center justify-between py-5">
 
     <a href="/" class="flex items-center gap-2 group">
@@ -63,3 +63,22 @@ const isCurrent = (href: string) =>
     </nav>
   </div>
 </header>
+
+<style>
+  /* Estado inicial: gradiente sutil que mantiene legibilidad sobre cualquier hero */
+  .nav-default {
+    background: linear-gradient(to bottom,
+      rgba(11, 18, 32, 0.78) 0%,
+      rgba(11, 18, 32, 0.45) 60%,
+      rgba(11, 18, 32, 0) 100%);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+  /* Estado scrolled (lo aplica main.js cuando scroll > 80) */
+  #nav.is-scrolled {
+    background: rgba(5, 8, 16, 0.92) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  }
+</style>

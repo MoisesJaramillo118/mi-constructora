@@ -34,11 +34,14 @@ const heroWords = site.hero_title.split(/\s+/);
     <div class="container-x relative w-full">
       <span class="eyebrow text-brand-400" data-aos="fade-up">Constructora · Lima · Perú</span>
 
-      <h1 class="hero-title text-white text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.18] tracking-tight max-w-5xl text-balance mt-3">
+      <h1 class="hero-title text-white text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.22] tracking-tight max-w-5xl text-balance mt-3">
         {heroWords.map((w, i) => (
-          <span class="word">
-            <span class={i === heroWords.length - 1 ? 'text-brand-400 italic' : ''}>{w}{' '}</span>
-          </span>
+          <>
+            <span class="word">
+              <span class={i === heroWords.length - 1 ? 'text-brand-400 italic' : ''}>{w}</span>
+            </span>
+            {i < heroWords.length - 1 && ' '}
+          </>
         ))}
       </h1>
 

@@ -105,19 +105,24 @@
 /* ---------- Reveal por palabras (hero) ---------- */
 .word {
   display: inline-block;
-  overflow: hidden;
+  /* Generoso padding-bottom para que la 'g' y 's' italics se vean completas */
+  padding-bottom: 0.25em;
+  /* Compensa el padding para mantener la altura visual original */
+  margin-bottom: -0.15em;
   vertical-align: bottom;
-  /* Espacio extra abajo para no recortar descendientes (g, p, y, j) */
-  padding-bottom: 0.1em;
-  margin-bottom: -0.1em;
-  /* Pequeño espacio entre palabras para que respire */
-  margin-right: 0.05em;
+  /* clip-path mejor que overflow:hidden — respeta padding-bottom */
+  clip-path: inset(0 -0.15em -0.05em -0.05em);
 }
 .word > span {
   display: inline-block;
   will-change: transform;
-  /* Asegura que los descendientes se vean completos */
-  padding-bottom: 0.05em;
+  /* Espacio adicional para descenders dentro del clip */
+  padding: 0 0.05em 0.05em;
+}
+/* Italic en el hero tiene descenders muy largos — espacio extra */
+.word > span.italic,
+.hero-title .italic {
+  padding-bottom: 0.1em;
 }
 
 /* ---------- Magnetic / hover micro-detalles modernos ---------- */

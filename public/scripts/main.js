@@ -83,22 +83,15 @@
       });
     });
 
-    // Nav: cambia look al hacer scroll
+    // Nav: cambia look al hacer scroll (clase is-scrolled definida en Nav.astro)
     const nav = document.getElementById('nav');
     if (nav) {
-      ScrollTrigger.create({
-        start: 'top -80',
-        end: 99999,
-        onUpdate: (self) => {
-          if (self.scroll() > 80) {
-            nav.classList.add('bg-ink-900/90', 'backdrop-blur-md', 'shadow-lg', 'py-2');
-            nav.classList.remove('py-5');
-          } else {
-            nav.classList.remove('bg-ink-900/90', 'backdrop-blur-md', 'shadow-lg', 'py-2');
-            nav.classList.add('py-5');
-          }
-        },
-      });
+      const toggleNavScrolled = () => {
+        if (window.scrollY > 80) nav.classList.add('is-scrolled');
+        else nav.classList.remove('is-scrolled');
+      };
+      toggleNavScrolled();
+      window.addEventListener('scroll', toggleNavScrolled, { passive: true });
     }
 
     // Transición entrada del main
