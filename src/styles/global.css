@@ -106,11 +106,18 @@
 .word {
   display: inline-block;
   overflow: hidden;
-  vertical-align: top;
+  vertical-align: bottom;
+  /* Espacio extra abajo para no recortar descendientes (g, p, y, j) */
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+  /* Pequeño espacio entre palabras para que respire */
+  margin-right: 0.05em;
 }
 .word > span {
   display: inline-block;
   will-change: transform;
+  /* Asegura que los descendientes se vean completos */
+  padding-bottom: 0.05em;
 }
 
 /* ---------- Magnetic / hover micro-detalles modernos ---------- */
