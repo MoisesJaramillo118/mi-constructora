@@ -100,23 +100,31 @@
 
   // ─── Swiper proyectos destacados ──────────────────────────────────
   if (window.Swiper && document.querySelector('.projectsSwiper')) {
-    new Swiper('.projectsSwiper', {
-      slidesPerView: 1,
-      spaceBetween: 0,
-      loop: true,
-      speed: 900,
-      autoplay: { delay: 4500, disableOnInteraction: false },
-      grabCursor: true,
-      pagination: { el: '.projectsSwiper .swiper-pagination', clickable: true },
-      navigation: {
-        nextEl: '.projectsSwiper .swiper-button-next',
-        prevEl: '.projectsSwiper .swiper-button-prev',
-      },
-      breakpoints: {
-        768:  { slidesPerView: 1.4 },
-        1100: { slidesPerView: 1.8 },
-      },
-    });
+    // Exponemos un helper global para poder re-inicializar Swiper cuando
+    // el carousel se rehidrata desde Supabase (proyectos destacados).
+    window.__initProjectsSwiper = function () {
+      if (window.__projectsSwiperInstance) {
+        window.__projectsSwiperInstance.destroy(true, true);
+      }
+      window.__projectsSwiperInstance = new Swiper('.projectsSwiper', {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        loop: true,
+        speed: 900,
+        autoplay: { delay: 4500, disableOnInteraction: false },
+        grabCursor: true,
+        pagination: { el: '.projectsSwiper .swiper-pagination', clickable: true },
+        navigation: {
+          nextEl: '.projectsSwiper .swiper-button-next',
+          prevEl: '.projectsSwiper .swiper-button-prev',
+        },
+        breakpoints: {
+          768:  { slidesPerView: 1.4 },
+          1100: { slidesPerView: 1.8 },
+        },
+      });
+    };
+    window.__initProjectsSwiper();
   }
 
   // ─── Menú móvil ───────────────────────────────────────────────────
