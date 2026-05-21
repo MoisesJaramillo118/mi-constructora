@@ -86,6 +86,54 @@ Para recibirlos también por email: Netlify → Forms → Form notifications.
 
 ---
 
+## Panel admin (Supabase)
+
+El sitio tiene un panel en **`/admin`** que permite subir, editar y eliminar proyectos
+sin tocar código ni hacer redeploy. Los datos viven en **Supabase** (Postgres + Storage,
+plan gratuito hasta 500 MB de imágenes).
+
+### Setup inicial (una sola vez)
+
+1. **Crea un proyecto en Supabase** → https://supabase.com → New Project (plan Free).
+2. **Ejecuta el SQL** en `Dashboard → SQL Editor → New query`:
+   - Copia y pega todo el contenido de [`supabase_setup.sql`](./supabase_setup.sql)
+   - Pulsa **Run** — crea la tabla `projects`, el bucket `project-images`, las políticas
+     y siembra los proyectos iniciales.
+3. **Copia las credenciales** de `Dashboard → Settings → API`:
+   - `Project URL`
+   - `anon` public key
+4. **Crea `.env`** (basado en `.env.example`):
+   ```bash
+   PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
+   PUBLIC_SUPABASE_ANON_KEY=eyJ...
+   PUBLIC_ADMIN_PASSWORD=tu-clave-segura
+   ```
+5. **En Netlify** → Site settings → Environment variables → agrega las mismas 3 variables.
+   Tras el siguiente deploy el panel quedará funcional en producción.
+
+### Cómo usar el panel
+
+- Visita `https://tu-sitio.netlify.app/admin`
+- Ingresa la contraseña configurada en `PUBLIC_ADMIN_PASSWORD`
+- Desde ahí puedes:
+  - **+ Nuevo proyecto** — formulario con upload de imagen
+  - **Editar** — modificar título, ubicación, descripción, año, orden, destacado
+  - **Eliminar** — borra el proyecto y la imagen del storage
+
+Los cambios se reflejan inmediatamente en `/proyectos` (no requiere rebuild del sitio).
+
+### Sobre la seguridad
+
+⚠️ La protección de `/admin` es por **contraseña compartida en el frontend**. Esto significa:
+- Cualquier persona que inspeccione el JavaScript del sitio podría encontrar la contraseña.
+- La base de datos tiene **políticas abiertas** (lectura y escritura sin auth real).
+- Es aceptable para una constructora pequeña, pero **NO uses esta misma contraseña en otras
+  cuentas importantes**.
+- Si en algún momento necesitas seguridad real, hay que migrar a **Supabase Auth** con
+  usuarios reales (email + password validados server-side).
+
+---
+
 ## Versionado
 
 ```bash
