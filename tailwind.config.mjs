@@ -4,26 +4,26 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans:    ['Inter', 'system-ui', 'sans-serif'],
-        display: ['"Playfair Display"', 'Georgia', 'serif'],
+        sans:    ['Manrope', 'system-ui', 'sans-serif'],
+        display: ['Archivo', 'Manrope', 'system-ui', 'sans-serif'],
       },
       colors: {
         brand: {
-          50:  '#fff8f1',
-          100: '#feecdc',
-          200: '#fcd9bd',
-          300: '#fdba8c',
-          400: '#ff8a4c',
-          500: '#ff5a1f',
-          600: '#d03801',
-          700: '#b43403',
-          800: '#8a2c0d',
-          900: '#73230d',
+          50:  '#fffaf0',
+          100: '#f9edcf',
+          200: '#f0d898',
+          300: '#e4bd5c',
+          400: '#d5a637',
+          500: '#bd8c24',
+          600: '#9c7018',
+          700: '#795414',
+          800: '#5c4015',
+          900: '#493415',
         },
         ink: {
-          900: '#0b1220',
-          800: '#111827',
-          700: '#1f2937',
+          900: '#041b33',
+          800: '#06294d',
+          700: '#0a4275',
         },
       },
       animation: {

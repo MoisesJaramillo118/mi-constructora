@@ -3,6 +3,7 @@
     "id": "construccion",
     "title": "Construcción",
     "icon": "hammer",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgs03tFz-6Ic6npKWrARXA_ygNIHSszIGrF8pJgqTUHcd0Hxkg4yoAKe3O&s=10",
     "description": "Obras civiles completas, desde los cimientos hasta la entrega de llaves.",
     "items": [
       "Casas, oficinas y locales comerciales",
@@ -20,6 +21,7 @@
     "id": "remodelaciones",
     "title": "Remodelaciones",
     "icon": "wrench",
+    "image": "/images/trabajos/remodelaciones.jpg",
     "description": "Renovamos espacios residenciales y comerciales sin perder su esencia.",
     "items": [
       "Pequeños edificios residenciales o comerciales",
@@ -33,13 +35,13 @@
     "id": "instalaciones-electricas",
     "title": "Instalaciones Eléctricas",
     "icon": "bolt",
+    "image": "/images/trabajos/electricos.jpg",
     "description": "Sistemas eléctricos seguros, ordenados y con mantenimiento garantizado.",
     "items": [
       "Instalación de ductos y tableros de distribución",
       "Cableado estructurado para oficinas y locales",
       "Luminarias y electrobombas",
-      "Pozo a tierra e instalación de artefactos",
-      "Mantenimientos preventivos y correctivos"
+      "Pozo a tierra e instalación de artefactos"
     ],
     "order": 3
   },
@@ -47,6 +49,7 @@
     "id": "instalaciones-sanitarias",
     "title": "Instalaciones Sanitarias",
     "icon": "pipe",
+    "image": "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=1200&q=80",
     "description": "Redes hidráulicas y sistemas de agua confiables y duraderos.",
     "items": [
       "Redes de agua fría y caliente",
@@ -58,23 +61,39 @@
     "order": 4
   },
   {
+    "id": "sistemas-de-bombeo",
+    "title": "Sistemas de Bombeo",
+    "icon": "pipe",
+    "image": "https://hidromecingenieros.com/wp-content/uploads/2026/01/bobmo.webp",
+    "description": "Soluciones para cisternas, tanques elevados y redes de agua a presión.",
+    "items": [
+      "Instalación de bombas de agua",
+      "Sistemas hidroneumáticos",
+      "Mantenimiento de electrobombas",
+      "Control de presión y distribución"
+    ],
+    "order": 5
+  },
+  {
     "id": "acabados",
     "title": "Acabados",
     "icon": "brush",
+    "image": "https://dellaroccapanama.com/wp-content/uploads/2024/08/EB-PE9053.webp",
     "description": "Detalles finales que marcan la diferencia en cada espacio.",
     "items": [
       "Pintura interior y exterior (oficinas, casas y departamentos)",
       "Empastados, barnizados y laqueados",
       "Pintado de estructuras y esmalte",
-      "Revestimientos: cerámica, porcelanato, mármol, granito, cuarzo y piedra",
+      "Revestimientos en cerámica, porcelanato, mármol, granito, cuarzo y piedra",
       "Muebles de melamina"
     ],
-    "order": 5
+    "order": 6
   },
   {
     "id": "drywall",
     "title": "Drywall",
     "icon": "layers",
+    "image": "/images/trabajos/drywall.jpg",
     "description": "Soluciones rápidas para remodelar y aprovechar espacios.",
     "items": [
       "Tabiques y divisiones internas",
@@ -82,19 +101,34 @@
       "Terrazas",
       "Oficinas, locales comerciales, departamentos, etc."
     ],
-    "order": 6
+    "order": 7
   },
   {
-    "id": "coberturas-metalicas",
-    "title": "Coberturas Metálicas y Acero Inoxidable",
+    "id": "estructuras-metalicas",
+    "title": "Estructuras Metálicas",
     "icon": "metal",
-    "description": "Estructuras metálicas resistentes con acabado profesional.",
+    "image": "https://edificacionesdinamicas.com/wp-content/uploads/2019/06/Bodega-y-Almacen-METAL-2000.jpg",
+    "description": "Fabricación e instalación de estructuras resistentes para obra y negocio.",
     "items": [
-      "Coberturas metálicas (techos)",
+      "Coberturas metálicas y techos",
       "Escaleras, barandas y portones",
       "Estructuras en acero inoxidable",
       "Soldadura y mantenimiento"
     ],
-    "order": 7
+    "order": 8
+  },
+  {
+    "id": "mantenimiento-general",
+    "title": "Mantenimiento General",
+    "icon": "shield",
+    "image": "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1200&q=80",
+    "description": "Atención preventiva y correctiva para conservar tus instalaciones en buen estado.",
+    "items": [
+      "Mantenimientos preventivos y correctivos",
+      "Reparaciones eléctricas y sanitarias",
+      "Mejoras de ambientes existentes",
+      "Atención para viviendas, oficinas y locales comerciales"
+    ],
+    "order": 9
   }
 ]

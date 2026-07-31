@@ -1,0 +1,32 @@
+[
+  {
+    "id": "drywall",
+    "title": "Drywall",
+    "image": "/images/trabajos/drywall.jpg",
+    "description": "Tabiques, cielos rasos y divisiones internas con acabado limpio."
+  },
+  {
+    "id": "acabados",
+    "title": "Acabados",
+    "image": "https://codepa.com.pe/wp-content/uploads/2018/08/codepa-servicio-mantenimiento-acabados-lima-peru-7-1.jpg",
+    "description": "Pintura, empastados y revestimientos que dan el toque final."
+  },
+  {
+    "id": "electricos",
+    "title": "Trabajos eléctricos",
+    "image": "/images/trabajos/electricos.jpg",
+    "description": "Instalaciones, tableros y mantenimiento seguros y ordenados."
+  },
+  {
+    "id": "remodelaciones",
+    "title": "Remodelaciones",
+    "image": "/images/trabajos/remodelaciones.jpg",
+    "description": "Renovamos cocinas, baños y ambientes completos."
+  },
+  {
+    "id": "bombeo",
+    "title": "Sistemas de bombeo",
+    "image": "https://hidromecingenieros.com/wp-content/uploads/2026/01/bobmo.webp",
+    "description": "Cisternas, tanques elevados y redes de agua a presión."
+  }
+]

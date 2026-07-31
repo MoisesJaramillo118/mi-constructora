@@ -1,6 +1,6 @@
 [
-  { "label": "Obras entregadas",        "value": 250, "suffix": "+" },
-  { "label": "Años de experiencia",     "value": 15,  "suffix": "+" },
-  { "label": "Clientes satisfechos",    "value": 98,  "suffix": "%" },
-  { "label": "Metros cuadrados construidos", "value": 50000, "suffix": "+" }
+  { "label": "Trabajos realizados",        "value": 250, "suffix": "+" },
+  { "label": "Años de experiencia",         "value": 15,  "suffix": "+" },
+  { "label": "Servicios especializados",    "value": 30,  "suffix": "+" },
+  { "label": "Clientes satisfechos",        "value": 98,  "suffix": "%" }
 ]

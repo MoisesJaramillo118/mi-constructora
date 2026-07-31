@@ -1,0 +1,163 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
+import servicesData from '../data/servicePage.json';
+
+type Service = {
+  id: string;
+  title: string;
+  icon: string;
+  image?: string;
+  description: string;
+  items?: string[];
+};
+
+const priority = [
+  'construccion',
+  'remodelaciones',
+  'acabados',
+  'instalaciones-electricas',
+  'instalaciones-sanitarias',
+  'sistemas-de-bombeo',
+  'drywall',
+  'estructuras-metalicas',
+  'mantenimiento-general'
+];
+
+const services: Service[] = [...(servicesData as Service[])].sort(
+  (a, b) => priority.indexOf(a.id) - priority.indexOf(b.id)
+);
+---
+
+<BaseLayout
+  title={`Servicios — ${site.name}`}
+  description="Construcción, remodelación, instalaciones, acabados y mantenimiento para viviendas, oficinas y locales comerciales."
+>
+  <section class="page-intro pb-20 md:pb-28">
+    <div class="container-x">
+      <header class="mb-9 grid gap-5 border-b border-ink-900/10 pb-8 lg:grid-cols-[1.15fr_.85fr] lg:items-end" data-aos="fade-up">
+        <div class="max-w-4xl">
+          <span class="eyebrow">Nuestros servicios</span>
+          <h1 class="max-w-4xl text-balance font-display text-[2.45rem] font-extrabold leading-[1.02] text-ink-900 sm:text-5xl lg:text-6xl">
+            Todo lo que necesitas para transformar tu espacio
+          </h1>
+        </div>
+        <p class="max-w-md leading-relaxed text-ink-700/70 lg:justify-self-end">
+          Construimos, renovamos y solucionamos con un solo equipo. Selecciona un servicio para conocer sus detalles.
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {services.map((service, index) => (
+          <article
+            class="service-visual-card group relative min-h-[300px] overflow-hidden rounded-[1.5rem] bg-ink-900 text-white sm:min-h-[390px]"
+            data-aos="fade-up"
+            data-aos-delay={(index % 3) * 70}
+          >
+            {service.image ? (
+              <img
+                src={service.image}
+                alt={`${service.title} — ${site.name}`}
+                loading={index > 2 ? 'lazy' : 'eager'}
+                width="1200"
+                height="900"
+                class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
+              />
+            ) : (
+              <div class="absolute inset-0 bg-gradient-to-br from-ink-800 to-ink-700"></div>
+            )}
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/52 to-ink-900/5"></div>
+            <div class="absolute inset-x-0 bottom-0 p-6 sm:p-7">
+              <span class="text-[10px] font-extrabold uppercase tracking-[0.22em] text-brand-300">Servicio integral</span>
+              <h2 class="mt-2 font-display text-2xl font-extrabold leading-tight sm:text-3xl">{service.title}</h2>
+              <p class="mt-2 text-sm leading-relaxed text-white/76">{service.description}</p>
+              <button
+                type="button"
+                class="service-open mt-5 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/28 px-5 text-[11px] font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-brand-300 hover:bg-brand-300 hover:text-ink-900"
+                data-dialog={`service-${service.id}`}
+              >
+                Conoce el servicio <span class="text-base leading-none" aria-hidden="true">→</span>
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {services.map(service => (
+    <dialog
+      id={`service-${service.id}`}
+      aria-labelledby={`service-title-${service.id}`}
+      class="service-dialog m-auto w-[calc(100%-1.25rem)] max-w-4xl overflow-hidden rounded-[1.5rem] bg-white p-0 text-ink-900 shadow-2xl backdrop:bg-ink-900/82 backdrop:backdrop-blur-sm sm:w-[calc(100%-2rem)] sm:rounded-[2rem]"
+    >
+      <div class="relative grid max-h-[calc(100dvh-1.25rem)] overflow-y-auto lg:grid-cols-[.92fr_1.08fr]">
+        <button
+          type="button"
+          class="service-close absolute right-3 top-3 z-30 inline-flex h-12 w-12 items-center justify-center rounded-full border border-ink-900/12 bg-white text-ink-900 shadow-xl transition hover:scale-105 hover:bg-brand-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 sm:right-5 sm:top-5"
+          aria-label={`Cerrar detalles de ${service.title}`}
+        >
+          <span class="relative block h-5 w-5" aria-hidden="true">
+            <span class="absolute left-1/2 top-1/2 h-[2px] w-5 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-full bg-current"></span>
+            <span class="absolute left-1/2 top-1/2 h-[2px] w-5 -translate-x-1/2 -translate-y-1/2 -rotate-45 rounded-full bg-current"></span>
+          </span>
+        </button>
+
+        <div class="relative min-h-[230px] overflow-hidden bg-ink-900 sm:min-h-[300px] lg:min-h-[580px]">
+          {service.image ? (
+            <img
+              src={service.image}
+              alt={`${service.title} — ${site.name}`}
+              loading="lazy"
+              width="1200"
+              height="900"
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+          ) : (
+            <div class="absolute inset-0 bg-gradient-to-br from-ink-800 to-ink-700"></div>
+          )}
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-900/72 via-ink-900/12 to-transparent"></div>
+        </div>
+
+        <div class="relative p-6 pt-8 sm:p-10 sm:pt-12 lg:flex lg:min-h-[580px] lg:flex-col lg:justify-center">
+          <span class="text-[10px] font-extrabold uppercase tracking-[0.22em] text-brand-600">Servicio integral</span>
+          <h2 id={`service-title-${service.id}`} class="mt-3 pr-14 font-display text-3xl font-extrabold sm:text-4xl">{service.title}</h2>
+          <p class="mt-4 leading-relaxed text-ink-700/72">{service.description}</p>
+
+          {service.items && (
+            <ul class="mt-7 space-y-0 border-t border-ink-900/10">
+              {service.items.map(item => (
+                <li class="flex items-start gap-3 border-b border-ink-900/8 py-3.5 text-sm leading-relaxed text-ink-700">
+                  <span class="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-200 text-[10px] font-black text-ink-900">✓</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <a href="/contacto" class="btn-primary mt-8 w-full sm:w-auto">Cotizar este servicio</a>
+        </div>
+      </div>
+    </dialog>
+  ))}
+</BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.service-open').forEach(button => {
+    button.addEventListener('click', () => {
+      const dialog = document.getElementById(button.dataset.dialog ?? '') as HTMLDialogElement | null;
+      dialog?.showModal();
+    });
+  });
+
+  document.querySelectorAll<HTMLDialogElement>('.service-dialog').forEach(dialog => {
+    dialog.querySelector<HTMLButtonElement>('.service-close')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', event => {
+      if (event.target === dialog) dialog.close();
+    });
+  });
+</script>
+
+<style>
+  :global(.site-footer) { margin-top: 0; }
+</style>

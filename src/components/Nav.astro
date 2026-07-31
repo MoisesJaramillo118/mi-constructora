@@ -5,80 +5,163 @@ type Props = { currentPath?: string };
 const { currentPath = '/' } = Astro.props;
 
 const items = [
-  { href: '/',          label: 'Inicio' },
-  { href: '/proyectos', label: 'Proyectos' },
-  { href: '/contacto',  label: 'Contacto' },
+  { href: '/', label: 'Inicio' },
+  { href: '/servicios', label: 'Servicios' },
+  { href: '/contacto', label: 'Contacto' },
 ];
 
 const isCurrent = (href: string) =>
   href === '/' ? currentPath === '/' : currentPath.startsWith(href);
 ---
 
-<header id="nav" class="nav-default fixed top-0 inset-x-0 z-50 transition-all duration-300">
-  <div class="container-x flex items-center justify-between py-5">
-
-    <a href="/" class="flex items-center gap-2 group">
-      <span class="inline-flex w-9 h-9 rounded-full bg-brand-600 items-center justify-center
-                   text-white font-display font-bold text-sm shadow-lg shadow-brand-600/40
-                   group-hover:scale-110 transition">
-        {site.short_name ?? 'SC'}
-      </span>
-      <span class="text-white font-display font-bold text-xl tracking-tight">
-        {site.name}
-      </span>
+<header id="nav" class="nav-default fixed inset-x-0 top-0 z-50 transition-all duration-300">
+  <div class="container-x flex min-h-[100px] items-center justify-between gap-5 py-2 md:min-h-[112px]">
+    <a
+      href="/"
+      class="brand-lockup group flex shrink-0 items-center transition duration-300 hover:opacity-85"
+      aria-label="Soluciones Constructivas Santa Cruz, ir al inicio"
+    >
+      <img
+        src="/images/brand/scc-logo-web.png"
+        alt="Soluciones Constructivas Santa Cruz"
+        width="320"
+        height="221"
+        class="brand-logo block h-auto w-[161px] object-contain sm:w-[179px] lg:w-[196px]"
+      />
     </a>
 
-    <nav class="hidden md:flex items-center gap-9">
-      {items.map(item => (
+    <nav class="hidden items-center gap-10 md:flex" aria-label="Navegación principal">
+      {items.map((item) => (
         <a
           href={item.href}
           class:list={[
-            'text-sm font-medium tracking-wide text-white/85 hover:text-white transition relative',
+            'nav-link relative text-[13px] font-bold uppercase tracking-[0.12em] transition',
             isCurrent(item.href) &&
-              'after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:bg-brand-500',
+              'after:absolute after:-bottom-2 after:left-0 after:right-0 after:h-0.5 after:bg-brand-500',
           ]}
+          aria-current={isCurrent(item.href) ? 'page' : undefined}
         >
           {item.label}
         </a>
       ))}
     </nav>
 
-    <a href="/contacto" class="hidden md:inline-flex btn-primary text-xs">
+    <a href="/contacto" class="btn-primary hidden text-xs md:inline-flex">
       Cotiza tu obra
     </a>
 
-    <button id="navToggle" class="md:hidden text-white p-2" aria-label="Abrir menú">
+    <button
+      id="navToggle"
+      class="nav-toggle inline-flex md:hidden"
+      aria-label="Abrir menú"
+      aria-controls="navMobile"
+      aria-expanded="false"
+      type="button"
+    >
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M3 6h18M3 12h18M3 18h18"/>
+        <path class="menu-line menu-line-one" d="M3 6h18" />
+        <path class="menu-line menu-line-two" d="M3 12h18" />
+        <path class="menu-line menu-line-three" d="M3 18h18" />
       </svg>
     </button>
   </div>
 
-  <div id="navMobile" class="md:hidden hidden bg-ink-900/95 backdrop-blur border-t border-white/10">
-    <nav class="container-x py-5 flex flex-col gap-4">
-      {items.map(item => (
-        <a href={item.href} class="text-white/90 text-lg">{item.label}</a>
+  <div id="navMobile" class="nav-mobile hidden border-t border-ink-900/10 md:hidden">
+    <nav class="container-x flex flex-col gap-2 py-5" aria-label="Navegación móvil">
+      {items.map((item) => (
+        <a
+          href={item.href}
+          class:list={['mobile-link', isCurrent(item.href) && 'is-current']}
+          aria-current={isCurrent(item.href) ? 'page' : undefined}
+        >
+          <span>{item.label}</span>
+          <span aria-hidden="true">&rarr;</span>
+        </a>
       ))}
-      <a href="/contacto" class="btn-primary text-xs self-start mt-2">Cotiza tu obra</a>
+
+      <a href="/contacto" class="btn-primary mt-3 w-full text-xs">Cotiza tu obra</a>
     </nav>
   </div>
 </header>
 
 <style>
-  /* Estado inicial: gradiente sutil que mantiene legibilidad sobre cualquier hero */
   .nav-default {
-    background: linear-gradient(to bottom,
-      rgba(11, 18, 32, 0.78) 0%,
-      rgba(11, 18, 32, 0.45) 60%,
-      rgba(11, 18, 32, 0) 100%);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
+    background:
+      linear-gradient(90deg, rgba(228, 189, 92, 0.07), transparent 28%),
+      rgba(247, 244, 237, 0.96);
+    border-bottom: 1px solid rgba(4, 27, 51, 0.1);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
   }
-  /* Estado scrolled (lo aplica main.js cuando scroll > 80) */
+
+  .nav-link {
+    color: rgba(4, 27, 51, 0.68);
+  }
+
+  .nav-link:hover {
+    color: #041b33;
+  }
+
+  .nav-toggle {
+    height: 48px;
+    width: 48px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(4, 27, 51, 0.12);
+    border-radius: 14px;
+    color: #041b33;
+    background: rgba(255, 255, 255, 0.62);
+  }
+
+  .nav-toggle path {
+    transform-origin: center;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+
+  .nav-toggle.is-open .menu-line-one {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .nav-toggle.is-open .menu-line-two {
+    opacity: 0;
+  }
+
+  .nav-toggle.is-open .menu-line-three {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .nav-mobile {
+    background: rgba(247, 244, 237, 0.985);
+    box-shadow: 0 25px 55px rgba(4, 27, 51, 0.16);
+  }
+
+  .mobile-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(4, 27, 51, 0.08);
+    padding: 0.9rem 0.25rem;
+    color: rgba(4, 27, 51, 0.74);
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .mobile-link.is-current {
+    color: #041b33;
+  }
+
   #nav.is-scrolled {
-    background: rgba(5, 8, 16, 0.92) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+    background: rgba(247, 244, 237, 0.985) !important;
+    box-shadow: 0 10px 35px rgba(4, 18, 32, 0.22);
+  }
+
+  @media (min-width: 768px) {
+    #nav.is-scrolled > div:first-child {
+      min-height: 100px;
+    }
+
+    #nav.is-scrolled .brand-logo {
+      width: 152px;
+    }
   }
 </style>

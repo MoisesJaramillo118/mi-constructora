@@ -17,7 +17,7 @@ const fallback: Project[] = (projectsData as Project[])
   description="Una muestra de las obras que hemos entregado."
 >
 
-  <section class="relative pt-44 pb-24 bg-ink-900 text-white overflow-hidden">
+  <section class="relative overflow-hidden bg-ink-900 pb-20 pt-36 text-white md:pb-24 md:pt-44">
     <div class="absolute inset-0 -z-10 opacity-30">
       <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1920&q=80" alt="" class="w-full h-full object-cover" />
       <div class="absolute inset-0 bg-gradient-to-b from-ink-900 via-ink-900/70 to-ink-900"></div>
@@ -38,23 +38,23 @@ const fallback: Project[] = (projectsData as Project[])
     <div id="projects-grid" class="container-x grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {fallback.map((p, i) => (
         <article
-          class="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 bg-ink-900"
+          class="group relative min-h-[360px] overflow-hidden rounded-[1.5rem] bg-ink-900 shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-2xl"
           data-aos="fade-up"
           data-aos-delay={(i % 3) * 100}
         >
-          <div class="aspect-[4/3] overflow-hidden">
+          <div class="absolute inset-0 overflow-hidden">
             <img src={p.image} alt={p.title} loading="lazy"
                  class="w-full h-full object-cover transition duration-700 group-hover:scale-110" />
           </div>
 
-          <div class="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/30 to-transparent opacity-90 group-hover:opacity-95 transition"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/50 to-transparent"></div>
 
-          <div class="absolute bottom-0 left-0 right-0 p-6 text-white translate-y-2 group-hover:translate-y-0 transition duration-500">
+          <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
             <div class="text-[11px] uppercase tracking-[0.3em] text-brand-400 mb-2">
               {p.year} · {p.location}
             </div>
             <h2 class="font-display font-bold text-2xl leading-tight">{p.title}</h2>
-            <p class="mt-3 text-white/80 text-sm leading-relaxed opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-40 transition-all duration-500 overflow-hidden">
+            <p class="mt-3 text-sm leading-relaxed text-white/78">
               {p.description}
             </p>
           </div>
@@ -88,17 +88,17 @@ const fallback: Project[] = (projectsData as Project[])
         const grid = document.getElementById('projects-grid');
         if (!grid) return;
         grid.innerHTML = projects.map((p, i) => `
-          <article class="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 bg-ink-900" data-aos="fade-up" data-aos-delay="${(i % 3) * 100}">
-            <div class="aspect-[4/3] overflow-hidden">
+          <article class="group relative min-h-[360px] overflow-hidden rounded-[1.5rem] bg-ink-900 shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-2xl" data-aos="fade-up" data-aos-delay="${(i % 3) * 100}">
+            <div class="absolute inset-0 overflow-hidden">
               <img src="${escapeAttr(p.image)}" alt="${escapeAttr(p.title)}" loading="lazy" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" />
             </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/30 to-transparent opacity-90 group-hover:opacity-95 transition"></div>
-            <div class="absolute bottom-0 left-0 right-0 p-6 text-white translate-y-2 group-hover:translate-y-0 transition duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/50 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
               <div class="text-[11px] uppercase tracking-[0.3em] text-brand-400 mb-2">
                 ${p.year} · ${escapeHtml(p.location)}
               </div>
               <h2 class="font-display font-bold text-2xl leading-tight">${escapeHtml(p.title)}</h2>
-              <p class="mt-3 text-white/80 text-sm leading-relaxed opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-40 transition-all duration-500 overflow-hidden">
+              <p class="mt-3 text-sm leading-relaxed text-white/78">
                 ${escapeHtml(p.description)}
               </p>
             </div>

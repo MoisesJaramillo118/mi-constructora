@@ -18,6 +18,7 @@ const {
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const currentPath = Astro.url.pathname;
+const absoluteOgImage = new URL(ogImage, Astro.site).toString();
 ---
 
 <!doctype html>
@@ -26,35 +27,27 @@ const currentPath = Astro.url.pathname;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
-  <meta name="theme-color" content="#0b1220" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="theme-color" content="#f7f4ed" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="canonical" href={canonical} />
 
   <title>{title}</title>
 
-  <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Swiper + AOS desde CDN (zero-config, fácil para junior) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Open Graph -->
   <meta property="og:title"       content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content={canonical} />
-  <meta property="og:image"       content={ogImage} />
+  <meta property="og:image"       content={absoluteOgImage} />
   <meta name="twitter:card"       content="summary_large_image" />
 </head>
 <body>
-
-  <!-- Loader inicial -->
-  <div class="page-loader" id="pageLoader">
-    <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
-  </div>
 
   <Nav currentPath={currentPath} />
 
@@ -65,13 +58,6 @@ const currentPath = Astro.url.pathname;
   <Footer />
   <WhatsAppFab />
 
-  <!-- Librerías de animación -->
-  <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script is:inline src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script is:inline src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-
-  <!-- Lógica de animaciones (sin cursor custom) -->
   <script src="/scripts/main.js" is:inline></script>
 </body>
 </html>

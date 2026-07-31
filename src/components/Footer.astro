@@ -4,63 +4,85 @@ import { waLink } from '../lib/utils';
 const year = new Date().getFullYear();
 ---
 
-<footer class="site-footer relative text-white pt-20 pb-10 mt-24">
-  <!-- Línea naranja decorativa arriba (separación visual de la sección CTA) -->
-  <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700"></div>
+<footer class="site-footer relative overflow-hidden pb-8 pt-16 text-white md:pt-20">
+  <div class="footer-grid absolute inset-0 opacity-30"></div>
+  <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-300/80 to-transparent"></div>
 
-  <div class="container-x grid grid-cols-1 md:grid-cols-4 gap-12 relative">
+  <div class="container-x relative grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-12">
 
-    <div class="md:col-span-2">
-      <div class="flex items-center gap-3 mb-5">
-        <span class="inline-flex w-12 h-12 rounded-full bg-brand-600 items-center justify-center
-                     text-white font-display font-bold text-base shadow-lg shadow-brand-600/40">
-          {site.short_name ?? 'SC'}
-        </span>
-        <span class="font-display font-bold text-2xl tracking-tight">{site.name}</span>
-      </div>
-      <p class="text-white/75 max-w-md leading-relaxed">{site.tagline}</p>
+    <div class="sm:col-span-2 lg:col-span-5">
+      <a href="/" class="inline-flex rounded-[1.4rem] bg-[#f7f4ed] p-3.5 shadow-2xl" aria-label="Volver al inicio">
+        <img
+          src="/images/brand/scc-logo-web.png"
+          alt="Soluciones Constructivas Santa Cruz"
+          width="320"
+          height="221"
+          class="h-auto w-[170px] object-contain"
+        />
+      </a>
+      <p class="mt-6 max-w-md text-sm leading-relaxed text-white/68 md:text-base">{site.tagline}</p>
     </div>
 
-    <div>
-      <h4 class="uppercase tracking-[0.25em] text-xs text-brand-400 font-bold mb-5">Contacto</h4>
-      <ul class="space-y-3 text-white/85 text-sm">
+    <div class="lg:col-span-3">
+      <h4 class="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-brand-300">Contacto</h4>
+      <ul class="space-y-4 text-sm text-white/82">
         {site.phone && (
-          <li><a href={`tel:${site.phone}`} class="hover:text-brand-400 transition">📞 {site.phone}</a></li>
+          <li><a href={`tel:${site.phone}`} class="footer-link">{site.phone}</a></li>
         )}
         {site.email && (
-          <li><a href={`mailto:${site.email}`} class="hover:text-brand-400 transition">✉️ {site.email}</a></li>
+          <li><a href={`mailto:${site.email}`} class="footer-link break-all">{site.email}</a></li>
         )}
-        {site.address && <li class="text-white/70">📍 {site.address}</li>}
+        {site.address && <li class="max-w-xs text-white/58">{site.address}</li>}
       </ul>
     </div>
 
-    <div>
-      <h4 class="uppercase tracking-[0.25em] text-xs text-brand-400 font-bold mb-5">Redes</h4>
-      <ul class="space-y-3 text-white/85 text-sm">
-        {site.instagram && (
-          <li><a href={site.instagram} target="_blank" rel="noopener" class="hover:text-brand-400 transition">Instagram</a></li>
-        )}
+    <div class="lg:col-span-2">
+      <h4 class="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-brand-300">Navegación</h4>
+      <ul class="space-y-3 text-sm text-white/82">
+        <li><a href="/" class="footer-link">Inicio</a></li>
+        <li><a href="/servicios" class="footer-link">Servicios</a></li>
+        <li><a href="/contacto" class="footer-link">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="lg:col-span-2">
+      <h4 class="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-brand-300">Redes</h4>
+      <ul class="space-y-3 text-sm text-white/82">
         {site.facebook && (
-          <li><a href={site.facebook} target="_blank" rel="noopener" class="hover:text-brand-400 transition">Facebook</a></li>
+          <li><a href={site.facebook} target="_blank" rel="noopener" class="footer-link">Facebook</a></li>
         )}
         {site.whatsapp && (
-          <li><a href={waLink(site.whatsapp, 'Hola Santa Cruz, vengo desde la web.')} target="_blank" rel="noopener" class="hover:text-brand-400 transition">WhatsApp</a></li>
+          <li><a href={waLink(site.whatsapp, 'Hola Santa Cruz, vengo desde la web.')} target="_blank" rel="noopener" class="footer-link">WhatsApp</a></li>
         )}
       </ul>
     </div>
   </div>
 
-  <div class="container-x mt-14 pt-6 border-t border-white/15 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-white/60 relative">
+  <div class="container-x relative mt-14 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/48 md:flex-row">
     <span>© {year} {site.name}. Todos los derechos reservados.</span>
-    <span>Hecho con cuidado.</span>
+    <a href="/contacto" class="transition hover:text-white">Solicitar una cotización</a>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    /* Negro sólido más profundo que la sección anterior (ink-900) — crea contraste */
-    background-color: #050810;
-    /* Sombra interna superior para reforzar separación */
+    background-color: #031426;
     box-shadow: inset 0 12px 24px -12px rgba(0, 0, 0, 0.6);
+  }
+  .footer-grid {
+    background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 52px 52px;
+    mask-image: linear-gradient(to bottom, #000, transparent 82%);
+  }
+  .footer-link {
+    position: relative;
+    display: inline-flex;
+    transition: color .25s ease, transform .25s ease;
+  }
+  .footer-link:hover {
+    color: #e4bd5c;
+    transform: translateX(3px);
   }
 </style>

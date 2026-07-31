@@ -1,168 +1,264 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Stats from '../components/Stats.astro';
-import Carousel from '../components/Carousel.astro';
-import Icon from '../components/Icon.astro';
 import site from '../data/site.json';
 import servicesData from '../data/services.json';
-import projectsData from '../data/projects.json';
+import worksData from '../data/works.json';
 
-type Service = { id: string; title: string; icon: string; description: string; order?: number };
-type Project = { id: string; title: string; year: number; location: string; image: string;
-                 description: string; featured?: boolean; order?: number };
+type Service = {
+  id: string;
+  title: string;
+  icon: string;
+  description: string;
+  items?: string[];
+  order?: number;
+};
+type Work = { id: string; title: string; image: string; description: string };
 
 const services: Service[] = (servicesData as Service[])
   .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-
-const featured: Project[] = (projectsData as Project[])
-  .filter(p => p.featured)
-  .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-
+const works: Work[] = worksData as Work[];
 const heroWords = site.hero_title.split(/\s+/);
 ---
 
 <BaseLayout>
 
   <!-- HERO -->
-  <section class="hero relative h-screen min-h-[640px] flex items-center overflow-hidden">
+  <section class="hero relative overflow-hidden bg-[#f7f4ed] text-ink-900">
+    <div class="hero-grid pointer-events-none absolute inset-0"></div>
+    <div class="pointer-events-none absolute -left-40 top-24 h-[32rem] w-[32rem] rounded-full border-[5rem] border-brand-300/[0.08]"></div>
+    <div class="pointer-events-none absolute bottom-0 right-0 h-px w-full bg-gradient-to-r from-transparent via-brand-400/60 to-transparent"></div>
 
-    <div class="hero-bg absolute inset-0 -z-10 will-change-transform">
-      <img src={site.hero_image} alt="" class="w-full h-[120%] object-cover" />
-      <div class="absolute inset-0 bg-gradient-to-b from-ink-900/70 via-ink-900/55 to-ink-900/85"></div>
-    </div>
+    <div class="container-x relative grid min-h-[780px] items-center gap-12 pb-20 pt-32 md:pt-40 lg:grid-cols-[1.02fr_.98fr] lg:gap-16 lg:pb-24">
+      <div class="relative z-10" data-aos="fade-up">
+        <span class="eyebrow">Soluciones constructivas Santa Cruz</span>
 
-    <div class="container-x relative w-full">
-      <span class="eyebrow text-brand-400" data-aos="fade-up">Constructora · Lima · Perú</span>
+        <h1 class="hero-title max-w-[12ch] text-balance font-display text-[2.7rem] font-extrabold leading-[1.02] tracking-[-0.055em] text-ink-900 sm:text-6xl lg:text-[4.65rem]">
+          {heroWords.map((word, index) => (
+            <>
+              <span class:list={['word', index >= heroWords.length - 2 && 'text-brand-600']}>{word}</span>
+              {index < heroWords.length - 1 && ' '}
+            </>
+          ))}
+        </h1>
 
-      <h1 class="hero-title text-white text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.22] tracking-tight max-w-5xl text-balance mt-3">
-        {heroWords.map((w, i) => (
-          <>
-            <span class="word">
-              <span class={i === heroWords.length - 1 ? 'text-brand-400 italic' : ''}>{w}</span>
-            </span>
-            {i < heroWords.length - 1 && ' '}
-          </>
-        ))}
-      </h1>
+        <p class="mt-6 max-w-2xl text-base leading-relaxed text-ink-700/78 sm:text-lg lg:text-xl">
+          {site.hero_subtitle}
+        </p>
 
-      <p class="hero-sub mt-7 text-white/80 text-lg md:text-xl max-w-2xl leading-relaxed">
-        {site.hero_subtitle}
-      </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a href="/contacto" class="btn-primary">
+            Cuéntanos tu proyecto
+            <span aria-hidden="true">→</span>
+          </a>
+          <a href="/servicios" class="btn-outline">Ver servicios</a>
+        </div>
 
-      <div class="hero-cta mt-10 flex flex-wrap gap-4">
-        <a href="/proyectos" class="btn-primary">
-          Ver nuestros proyectos
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
-        <a href="/contacto" class="btn-ghost">Solicitar cotización</a>
+        <div class="hero-proof mt-9 grid grid-cols-1 gap-3 pt-6 sm:grid-cols-3">
+          {['Atención directa', 'Experiencia práctica', 'Soluciones completas'].map(item => (
+            <div class="flex items-center gap-2.5 text-sm font-semibold text-ink-700/75">
+              <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-brand-200/65 text-[11px] font-black text-ink-900">✓</span>
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 text-xs uppercase tracking-[0.4em] flex flex-col items-center gap-2">
-        <span>Desliza</span>
-        <span class="w-px h-10 bg-gradient-to-b from-white/60 to-transparent animate-pulse"></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- STATS -->
-  <Stats />
-
-  <!-- QUIÉNES SOMOS -->
-  <section id="nosotros" class="py-28">
-    <div class="container-x grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-      <div data-aos="fade-right">
-        <div class="relative">
-          <img id="about-image" src={site.about_image} alt="" class="rounded-2xl shadow-2xl w-full aspect-[4/5] object-cover" />
-          <div class="hidden md:block absolute -bottom-8 -right-8 bg-brand-600 text-white p-7 rounded-2xl shadow-xl max-w-[230px]">
-            <div class="font-display font-bold text-4xl">15+</div>
-            <div class="text-sm mt-1 opacity-90">años transformando ideas en obras</div>
+      <div class="relative mx-auto w-full max-w-[620px]" data-aos="fade-left" data-aos-delay="100">
+        <div class="hero-media relative overflow-hidden rounded-[1.75rem] border border-white/70 bg-ink-900 sm:rounded-[2.25rem]">
+          <picture>
+            <source media="(max-width: 767px)" srcset="/images/trabajos/drywall-terminado-sin-logo.png" />
+            <img
+              src="/images/trabajos/drywall-terminado-sin-logo.png"
+              alt="Ambiente interior completamente terminado con acabados en drywall"
+              width="1536"
+              height="1152"
+              fetchpriority="high"
+              class="h-[330px] w-full object-cover object-center sm:h-[460px] lg:h-[610px]"
+            />
+          </picture>
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-900/55 via-transparent to-white/5"></div>
+          <div class="absolute inset-x-5 bottom-5 flex items-end justify-between gap-4 rounded-2xl border border-white/20 bg-ink-900/72 p-4 text-white backdrop-blur-md sm:inset-x-7 sm:bottom-7 sm:p-5">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-300">De principio a fin</span>
+              <p class="mt-1 max-w-xs text-sm font-semibold leading-snug sm:text-base">Un solo equipo para coordinar cada etapa de tu proyecto.</p>
+            </div>
+            <span class="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-300 text-xl font-black text-ink-900 sm:inline-flex" aria-hidden="true">↗</span>
           </div>
         </div>
+        <div class="absolute -bottom-5 -left-5 -z-10 h-36 w-36 rounded-[2rem] border border-brand-400/35 sm:-left-8 sm:h-48 sm:w-48"></div>
       </div>
-
-      <div data-aos="fade-left">
-        <span class="eyebrow">Quiénes somos</span>
-        <h2 class="h-section text-ink-900">{site.about_title}</h2>
-        <div class="mt-7 text-ink-700/80 text-lg leading-relaxed space-y-4">
-          {site.about_text.split('\n\n').map(p => <p>{p.trim()}</p>)}
-        </div>
-        <a href="/contacto" class="btn-dark mt-9">Conversemos sobre tu proyecto</a>
-      </div>
-
     </div>
   </section>
 
   <!-- SERVICIOS -->
-  <section class="bg-slate-50 py-28">
-    <div class="container-x">
-      <div class="max-w-2xl mx-auto text-center mb-16" data-aos="fade-up">
-        <span class="eyebrow">Servicios</span>
-        <h2 class="h-section text-ink-900">Todo lo que necesitas, bajo un mismo techo</h2>
-        <p class="mt-5 text-ink-700/70 text-lg">Desde el primer boceto hasta la entrega de llaves.</p>
+  <section class="relative overflow-hidden bg-[#f2f4f5] section-space">
+    <div class="services-grid-bg pointer-events-none absolute inset-0"></div>
+    <div class="container-x relative">
+      <header class="mb-12 grid gap-6 border-b border-ink-900/12 pb-9 lg:grid-cols-[1.1fr_.9fr] lg:items-end" data-aos="fade-up">
+        <div>
+          <span class="eyebrow">Servicios de obra</span>
+          <h2 class="h-section max-w-3xl text-ink-900">
+            Un equipo multifacético.<br />
+            <span class="text-brand-600">Una solución integral.</span>
+          </h2>
+        </div>
+        <p class="max-w-xl text-base leading-relaxed text-ink-700/72 lg:justify-self-end lg:text-lg">
+          Desde la estructura hasta el último detalle. Nos adaptamos a cada necesidad para que tu obra avance con orden, criterio y un responsable de principio a fin.
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-6">
+        {services.map((service, index) => (
+          <article
+            class:list={[
+              'service-card p-6 md:p-7',
+              index === 0 ? 'md:col-span-2 lg:col-span-6 lg:grid lg:grid-cols-[.8fr_1.2fr] lg:gap-12 lg:p-10' : 'lg:col-span-2'
+            ]}
+            data-aos="fade-up"
+            data-aos-delay={(index % 3) * 70}
+          >
+            <div>
+              <span class="text-[10px] font-extrabold uppercase tracking-[0.22em] text-brand-600">Área de trabajo</span>
+              <h3 class:list={['mt-3 font-display font-extrabold leading-[1.05] text-ink-900', index === 0 ? 'text-3xl sm:text-4xl' : 'text-2xl']}>
+                {service.title}
+              </h3>
+              <p class:list={['mt-3 max-w-xl leading-relaxed text-ink-700/68', index === 0 ? 'text-base' : 'text-sm']}>
+                {service.description}
+              </p>
+            </div>
+
+            {service.items && service.items.length > 0 && (
+              <div class:list={['mt-6 border-t border-ink-900/10 pt-2', index === 0 && 'lg:mt-0 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0']}>
+                <ul class:list={['grid grid-cols-1', index === 0 && 'sm:grid-cols-2 sm:gap-x-8']}>
+                  {service.items.map(item => (
+                    <li class="service-list-item flex items-start gap-3 py-3 text-sm leading-snug text-ink-700/78">
+                      <span class="service-check mt-0.5" aria-hidden="true">✓</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </article>
+        ))}
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-        {services.map((s, i) => (
-          <div class="card hover-lift p-8 group" data-aos="fade-up" data-aos-delay={(i % 3) * 100}>
-            <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-600 inline-flex items-center justify-center mb-5 group-hover:bg-brand-600 group-hover:text-white transition">
-              <Icon name={s.icon} class="w-7 h-7" />
+      <div class="mt-9 flex flex-col gap-5 rounded-[1.5rem] bg-ink-900 px-6 py-7 text-white sm:flex-row sm:items-center sm:justify-between md:px-9" data-aos="fade-up">
+        <p class="font-display text-xl font-bold md:text-2xl">¿No encuentras exactamente lo que necesitas?</p>
+        <a href="/servicios" class="btn-primary shrink-0">Explorar todos los servicios</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRABAJOS -->
+  <section class="relative overflow-hidden bg-ink-900 section-space">
+    <div class="pointer-events-none absolute -right-40 top-10 h-96 w-96 rounded-full border border-brand-300/16"></div>
+    <div class="container-x relative">
+      <header class="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between" data-aos="fade-up">
+        <div>
+          <span class="eyebrow text-brand-300">Nuestros trabajos</span>
+          <h2 class="h-section max-w-3xl text-white">Obras que hablan por sí solas</h2>
+          <p class="mt-4 max-w-xl text-base leading-relaxed text-white/62 md:text-lg">Una muestra de lo que hacemos todos los días, en cada especialidad.</p>
+        </div>
+        <a href="/contacto" class="btn-ghost self-start md:self-auto">Solicitar cotización</a>
+      </header>
+
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-6 lg:auto-rows-[17rem]">
+        {works.map((work, index) => (
+          <a
+            href="/contacto"
+            class:list={[
+              'work-card group block min-h-[300px]',
+              index < 3 ? 'lg:col-span-2' : 'lg:col-span-3'
+            ]}
+            data-aos="fade-up"
+            data-aos-delay={(index % 3) * 70}
+          >
+            <img
+              src={work.image}
+              alt={`${work.title} — Santa Cruz`}
+              loading="lazy"
+              width="800"
+              height="600"
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/45 to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 p-6 text-white">
+              <span class="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-300">Trabajo realizado</span>
+              <h3 class="mt-2 font-display text-2xl font-extrabold">{work.title}</h3>
+              <p class="mt-2 max-w-md text-sm leading-relaxed text-white/72">{work.description}</p>
             </div>
-            <h3 class="font-display font-bold text-xl text-ink-900">{s.title}</h3>
-            <p class="mt-3 text-ink-700/70 leading-relaxed text-sm">{s.description}</p>
-          </div>
+          </a>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- CARRUSEL DE PROYECTOS DESTACADOS -->
-  <section class="bg-ink-900 py-28 overflow-hidden">
-    <div class="container-x mb-12">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6" data-aos="fade-up">
-        <div>
-          <span class="eyebrow text-brand-400">Proyectos destacados</span>
-          <h2 class="h-section text-white">Obras que hablan por sí solas</h2>
+  <!-- QUIÉNES SOMOS -->
+  <section id="nosotros" class="overflow-hidden bg-white section-space">
+    <div class="container-x grid grid-cols-1 items-center gap-12 lg:grid-cols-[.95fr_1.05fr] lg:gap-20">
+      <div class="relative" data-aos="fade-right">
+        <div class="relative overflow-hidden rounded-[1.75rem] bg-ink-900 shadow-2xl sm:rounded-[2.25rem]">
+          <img
+            src="/images/equipo-960.webp"
+            alt="Equipo especializado trabajando en una construcción en Lima"
+            width="960"
+            height="640"
+            loading="lazy"
+            class="h-[420px] w-full object-cover sm:h-[560px]"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-900/86 via-transparent to-transparent"></div>
+          <div class="absolute inset-x-0 bottom-0 p-6 text-white sm:p-9">
+            <span class="text-[10px] font-bold uppercase tracking-[0.24em] text-brand-300">Experiencia en el terreno</span>
+            <p class="mt-3 max-w-md font-display text-2xl font-bold leading-snug sm:text-3xl">Soluciones pensadas desde la realidad de cada obra.</p>
+          </div>
         </div>
-        <a href="/proyectos" class="btn-ghost self-start md:self-auto">Ver todos los proyectos</a>
+        <div class="absolute -right-5 -top-5 -z-10 h-36 w-36 rounded-[1.75rem] bg-brand-100 sm:-right-8 sm:-top-8"></div>
+      </div>
+
+      <div data-aos="fade-left">
+        <span class="eyebrow">Sobre Santa Cruz</span>
+        <h2 class="h-section text-ink-900">{site.about_title}</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-ink-700/76 sm:text-lg">
+          {site.about_text.split('\n\n').map(paragraph => <p>{paragraph.trim()}</p>)}
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {[
+            'Evaluación clara del trabajo',
+            'Cuidado de materiales y acabados',
+            'Coordinación directa durante la obra',
+            'Soluciones para distintos servicios'
+          ].map(item => (
+            <div class="flex items-center gap-3 rounded-xl border border-ink-900/8 bg-[#f7f4ed] px-4 py-3.5 text-sm font-bold text-ink-800">
+              <span class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-200 text-[11px] text-ink-900">✓</span>
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
+
+        <a href="/contacto" class="btn-dark mt-8">Conversemos sobre tu proyecto</a>
       </div>
     </div>
-
-    <Carousel projects={featured} />
   </section>
 
-  <!-- CTA FINAL -->
-  <section class="relative py-24 overflow-hidden">
-    <div class="absolute inset-0 -z-10">
-      <img src={site.cta_image} alt="" class="w-full h-full object-cover" />
-      <div class="absolute inset-0 bg-ink-900/85"></div>
-    </div>
-
-    <div class="container-x text-center text-white" data-aos="zoom-in">
-      <h2 class="h-section max-w-3xl mx-auto">{site.cta_title}</h2>
-      <p class="mt-6 text-white/80 text-lg max-w-xl mx-auto">{site.cta_subtitle}</p>
-      <a href="/contacto" class="btn-shine btn text-white mt-10">
-        Cotiza tu obra ahora
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-      </a>
+  <!-- CTA -->
+  <section class="relative overflow-hidden bg-[#f7f4ed] py-20 md:py-24">
+    <div class="container-x">
+      <div class="relative overflow-hidden rounded-[2rem] bg-ink-900 px-6 py-14 text-center text-white shadow-2xl sm:px-10 md:py-20" data-aos="zoom-in">
+        <div class="pointer-events-none absolute -left-24 -top-24 h-64 w-64 rounded-full border-[2.5rem] border-brand-300/10"></div>
+        <div class="pointer-events-none absolute -bottom-20 -right-20 h-60 w-60 rounded-full border border-brand-300/22"></div>
+        <div class="relative">
+          <span class="eyebrow text-brand-300">Hagámoslo realidad</span>
+          <h2 class="h-section mx-auto max-w-3xl">{site.cta_title}</h2>
+          <p class="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/68 md:text-lg">{site.cta_subtitle}</p>
+          <a href="/contacto" class="btn-primary mt-8">
+            Cotiza tu obra ahora
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
-
-  <script>
-    // Hidrata la imagen "Quiénes somos" desde Supabase (si fue actualizada en /admin).
-    // Si Supabase no responde, queda la imagen del JSON renderizada en SSR.
-    import { getSiteSettings } from '../lib/supabase';
-    (async () => {
-      try {
-        const s = await getSiteSettings();
-        if (s?.about_image) {
-          const img = document.getElementById('about-image') as HTMLImageElement | null;
-          if (img && img.src !== s.about_image) img.src = s.about_image;
-        }
-      } catch (err) {
-        console.warn('No se pudo cargar about_image desde Supabase:', err);
-      }
-    })();
-  </script>
 
 </BaseLayout>

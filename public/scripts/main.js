@@ -1,152 +1,78 @@
 /**
- * Santa Cruz — animaciones (sin cursor custom)
- *   GSAP + ScrollTrigger: hero stagger, parallax, contadores, nav shrink
- *   Swiper: carrusel proyectos destacados
- *   AOS: fade-in genéricos
- *   Menú móvil
+ * Interacciones globales ligeras:
+ * navegacion, menu movil y revelados al hacer scroll.
  */
 (function () {
   'use strict';
 
-  // ─── Loader inicial ───────────────────────────────────────────────
-  window.addEventListener('load', () => {
-    const loader = document.getElementById('pageLoader');
-    if (loader) {
-      setTimeout(() => loader.classList.add('is-hidden'), 250);
-      setTimeout(() => loader.remove(), 900);
-    }
-  });
+  const root = document.documentElement;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ─── AOS ──────────────────────────────────────────────────────────
-  if (window.AOS) {
-    AOS.init({
-      duration: 800,
-      easing: 'ease-out-cubic',
-      once: true,
-      offset: 60,
-    });
+  if (!reduceMotion) {
+    root.classList.add('motion-ready');
   }
 
-  // ─── GSAP + ScrollTrigger ─────────────────────────────────────────
-  if (window.gsap && window.ScrollTrigger) {
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Hero: palabras escalonadas
-    gsap.set('.hero-title .word > span', { y: '110%' });
-    gsap.to('.hero-title .word > span', {
-      y: '0%',
-      duration: 1.1,
-      ease: 'power4.out',
-      stagger: 0.09,
-      delay: 0.2,
-    });
-    gsap.from('.hero-sub', {
-      y: 30, opacity: 0, duration: 1, delay: 0.9, ease: 'power3.out',
-    });
-    gsap.from('.hero-cta > *', {
-      y: 30, opacity: 0, duration: 0.9, delay: 1.1, stagger: 0.1, ease: 'power3.out',
-    });
-
-    // Parallax del hero
-    if (document.querySelector('.hero-bg img')) {
-      gsap.to('.hero-bg img', {
-        yPercent: 20,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.hero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
-    }
-
-    // Contadores animados
-    document.querySelectorAll('.stat').forEach((el) => {
-      const target = parseInt(el.dataset.target || '0', 10);
-      const suffix = el.dataset.suffix || '';
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 85%',
-        once: true,
-        onEnter: () => {
-          const obj = { n: 0 };
-          gsap.to(obj, {
-            n: target,
-            duration: 2,
-            ease: 'power2.out',
-            onUpdate: () => {
-              el.textContent = Math.round(obj.n).toLocaleString('es-PE') + suffix;
-            },
-          });
-        },
-      });
-    });
-
-    // Nav: cambia look al hacer scroll (clase is-scrolled definida en Nav.astro)
-    const nav = document.getElementById('nav');
-    if (nav) {
-      const toggleNavScrolled = () => {
-        if (window.scrollY > 80) nav.classList.add('is-scrolled');
-        else nav.classList.remove('is-scrolled');
-      };
-      toggleNavScrolled();
-      window.addEventListener('scroll', toggleNavScrolled, { passive: true });
-    }
-
-    // Transición entrada del main
-    gsap.from('main', { opacity: 0, duration: 0.6, ease: 'power2.out' });
-  }
-
-  // ─── Swiper proyectos destacados ──────────────────────────────────
-  if (window.Swiper && document.querySelector('.projectsSwiper')) {
-    // Exponemos un helper global para poder re-inicializar Swiper cuando
-    // el carousel se rehidrata desde Supabase (proyectos destacados).
-    window.__initProjectsSwiper = function () {
-      if (window.__projectsSwiperInstance) {
-        window.__projectsSwiperInstance.destroy(true, true);
-      }
-      window.__projectsSwiperInstance = new Swiper('.projectsSwiper', {
-        slidesPerView: 1,
-        spaceBetween: 0,
-        loop: true,
-        speed: 900,
-        autoplay: { delay: 4500, disableOnInteraction: false },
-        grabCursor: true,
-        pagination: { el: '.projectsSwiper .swiper-pagination', clickable: true },
-        navigation: {
-          nextEl: '.projectsSwiper .swiper-button-next',
-          prevEl: '.projectsSwiper .swiper-button-prev',
-        },
-        breakpoints: {
-          768:  { slidesPerView: 1.4 },
-          1100: { slidesPerView: 1.8 },
-        },
-      });
-    };
-    window.__initProjectsSwiper();
-  }
-
-  // ─── Menú móvil ───────────────────────────────────────────────────
+  const nav = document.getElementById('nav');
   const navToggle = document.getElementById('navToggle');
   const navMobile = document.getElementById('navMobile');
-  if (navToggle && navMobile) {
-    navToggle.addEventListener('click', () => navMobile.classList.toggle('hidden'));
-    navMobile.querySelectorAll('a').forEach((a) =>
-      a.addEventListener('click', () => navMobile.classList.add('hidden'))
-    );
-  }
 
-  // ─── Botones magnetic (hover sutil que sigue al cursor) ───────────
-  document.querySelectorAll('.btn-primary, .btn-shine').forEach((btn) => {
-    const reset = () => { btn.style.transform = ''; };
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top  - rect.height / 2;
-      btn.style.transform = `translate(${x * 0.15}px, ${y * 0.2}px)`;
-    });
-    btn.addEventListener('mouseleave', reset);
+  const updateNav = () => {
+    nav?.classList.toggle('is-scrolled', window.scrollY > 32);
+  };
+
+  updateNav();
+  window.addEventListener('scroll', updateNav, { passive: true });
+
+  const setMenu = (open) => {
+    if (!navToggle || !navMobile) return;
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Cerrar menu' : 'Abrir menu');
+    navToggle.classList.toggle('is-open', open);
+    navMobile.classList.toggle('hidden', !open);
+    document.body.classList.toggle('menu-open', open);
+  };
+
+  navToggle?.addEventListener('click', () => {
+    setMenu(navToggle.getAttribute('aria-expanded') !== 'true');
   });
 
+  navMobile?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setMenu(false));
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setMenu(false);
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) setMenu(false);
+  });
+
+  const animated = Array.from(document.querySelectorAll('[data-aos]'));
+
+  animated.forEach((element) => {
+    const delay = Number(element.getAttribute('data-aos-delay') || 0);
+    element.style.transitionDelay = `${Math.min(delay, 240)}ms`;
+  });
+
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    animated.forEach((element) => element.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.12,
+      rootMargin: '0px 0px -7% 0px',
+    }
+  );
+
+  animated.forEach((element) => observer.observe(element));
 })();
