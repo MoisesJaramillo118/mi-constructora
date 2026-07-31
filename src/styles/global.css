@@ -260,10 +260,17 @@
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: rgba(228, 189, 92, .23);
-  color: #9c7018;
+  background: #e30613;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(227, 6, 19, .16);
   font-size: .7rem;
   font-weight: 900;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.service-list-item:hover .service-check {
+  transform: translateY(-1px) scale(1.04);
+  box-shadow: 0 6px 12px rgba(227, 6, 19, .2);
 }
 
 /* Trabajos */

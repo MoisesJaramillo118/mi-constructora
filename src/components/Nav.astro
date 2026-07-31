@@ -15,7 +15,7 @@ const isCurrent = (href: string) =>
 ---
 
 <header id="nav" class="nav-default fixed inset-x-0 top-0 z-50 transition-all duration-300">
-  <div class="container-x flex min-h-[100px] items-center justify-between gap-5 py-2 md:min-h-[112px]">
+  <div class="container-x flex min-h-[82px] items-center justify-between gap-5 py-1 transition-[min-height,padding] duration-300 sm:min-h-[92px] sm:py-1.5 md:min-h-[104px]">
     <a
       href="/"
       class="brand-lockup group flex shrink-0 items-center transition duration-300 hover:opacity-85"
@@ -26,7 +26,7 @@ const isCurrent = (href: string) =>
         alt="Soluciones Constructivas Santa Cruz"
         width="320"
         height="221"
-        class="brand-logo block h-auto w-[161px] object-contain sm:w-[179px] lg:w-[196px]"
+        class="brand-logo block h-auto w-[108px] -translate-y-0.5 object-contain transition-[width] duration-300 sm:w-[134px] md:w-[166px] lg:w-[180px]"
       />
     </a>
 
@@ -103,12 +103,12 @@ const isCurrent = (href: string) =>
   }
 
   .nav-toggle {
-    height: 48px;
-    width: 48px;
+    height: 44px;
+    width: 44px;
     align-items: center;
     justify-content: center;
     border: 1px solid rgba(4, 27, 51, 0.12);
-    border-radius: 14px;
+    border-radius: 13px;
     color: #041b33;
     background: rgba(255, 255, 255, 0.62);
   }
@@ -155,13 +155,25 @@ const isCurrent = (href: string) =>
     box-shadow: 0 10px 35px rgba(4, 18, 32, 0.22);
   }
 
-  @media (min-width: 768px) {
+  @media (max-width: 767px) {
     #nav.is-scrolled > div:first-child {
-      min-height: 100px;
+      min-height: 72px;
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
     }
 
     #nav.is-scrolled .brand-logo {
-      width: 152px;
+      width: 98px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    #nav.is-scrolled > div:first-child {
+      min-height: 92px;
+    }
+
+    #nav.is-scrolled .brand-logo {
+      width: 146px;
     }
   }
 </style>

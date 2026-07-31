@@ -33,7 +33,7 @@ const services: Service[] = [...(servicesData as Service[])].sort(
   title={`Servicios — ${site.name}`}
   description="Construcción, remodelación, instalaciones, acabados y mantenimiento para viviendas, oficinas y locales comerciales."
 >
-  <section class="page-intro pb-20 md:pb-28">
+  <section class="services-page-intro page-intro pb-20 md:pb-28">
     <div class="container-x">
       <header class="mb-9 grid gap-5 border-b border-ink-900/10 pb-8 lg:grid-cols-[1.15fr_.85fr] lg:items-end" data-aos="fade-up">
         <div class="max-w-4xl">
@@ -89,7 +89,7 @@ const services: Service[] = [...(servicesData as Service[])].sort(
     <dialog
       id={`service-${service.id}`}
       aria-labelledby={`service-title-${service.id}`}
-      class="service-dialog m-auto w-[calc(100%-1.25rem)] max-w-4xl overflow-hidden rounded-[1.5rem] bg-white p-0 text-ink-900 shadow-2xl backdrop:bg-ink-900/82 backdrop:backdrop-blur-sm sm:w-[calc(100%-2rem)] sm:rounded-[2rem]"
+      class="service-dialog m-auto w-[calc(100%-1.25rem)] max-w-4xl overflow-hidden rounded-[1.5rem] bg-white p-0 text-ink-900 shadow-2xl backdrop:bg-ink-900/92 backdrop:backdrop-blur-md sm:w-[calc(100%-2rem)] sm:rounded-[2rem]"
     >
       <div class="relative grid max-h-[calc(100dvh-1.25rem)] overflow-y-auto lg:grid-cols-[.92fr_1.08fr]">
         <button
@@ -128,7 +128,7 @@ const services: Service[] = [...(servicesData as Service[])].sort(
             <ul class="mt-7 space-y-0 border-t border-ink-900/10">
               {service.items.map(item => (
                 <li class="flex items-start gap-3 border-b border-ink-900/8 py-3.5 text-sm leading-relaxed text-ink-700">
-                  <span class="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-200 text-[10px] font-black text-ink-900">✓</span>
+                  <span class="service-dialog-check mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-black">✓</span>
                   <span>{item}</span>
                 </li>
               ))}
@@ -143,15 +143,42 @@ const services: Service[] = [...(servicesData as Service[])].sort(
 </BaseLayout>
 
 <script>
+  let lockedScrollY = 0;
+
+  const lockPageScroll = () => {
+    lockedScrollY = window.scrollY;
+    document.documentElement.classList.add('service-modal-open');
+    document.body.classList.add('service-modal-open');
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${lockedScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+  };
+
+  const unlockPageScroll = () => {
+    document.documentElement.classList.remove('service-modal-open');
+    document.body.classList.remove('service-modal-open');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    window.scrollTo(0, lockedScrollY);
+  };
+
   document.querySelectorAll<HTMLButtonElement>('.service-open').forEach(button => {
     button.addEventListener('click', () => {
       const dialog = document.getElementById(button.dataset.dialog ?? '') as HTMLDialogElement | null;
-      dialog?.showModal();
+      if (!dialog || dialog.open) return;
+      lockPageScroll();
+      dialog.showModal();
     });
   });
 
   document.querySelectorAll<HTMLDialogElement>('.service-dialog').forEach(dialog => {
     dialog.querySelector<HTMLButtonElement>('.service-close')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('close', unlockPageScroll);
     dialog.addEventListener('click', event => {
       if (event.target === dialog) dialog.close();
     });
@@ -160,4 +187,37 @@ const services: Service[] = [...(servicesData as Service[])].sort(
 
 <style>
   :global(.site-footer) { margin-top: 0; }
+
+  .services-page-intro { padding-top: 10.75rem; }
+
+  .service-dialog,
+  .service-dialog > div {
+    overscroll-behavior: contain;
+  }
+
+  .service-dialog > div {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .service-dialog-check {
+    color: #fff;
+    background: #e30613;
+    box-shadow: 0 4px 10px rgba(227, 6, 19, .16);
+    transition: transform .22s ease, box-shadow .22s ease;
+  }
+
+  .service-dialog li:hover .service-dialog-check {
+    transform: translateY(-1px) scale(1.04);
+    box-shadow: 0 6px 12px rgba(227, 6, 19, .2);
+  }
+
+  :global(html.service-modal-open),
+  :global(body.service-modal-open) {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  @media (max-width: 767px) {
+    .services-page-intro { padding-top: 8.5rem; }
+  }
 </style>
